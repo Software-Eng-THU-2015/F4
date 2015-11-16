@@ -1,0 +1,33 @@
+@font-face {
+    font-family: mFont;
+    src: url('/static/215000EURO.ttf');
+}
+
+.headText p {
+	text-align: center;
+	font-size: 5em;
+	font-style: oblique;
+    font-family: mFont;
+    letter-spacing: 0.2em;
+}
+
+.headText {
+    height: 40em;
+    padding-top: 15em;
+}
+
+.box {
+    box-shadow: 0.3em 0.3em 0.45em #222222;
+    border-radius: 1em;
+}
+
+.bgDiv {
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: 0.3em 0.3em 0.45em #222222;
+    background-color: rgba(0,0,0,0.2);
+}
+
+#main {
+    height: 43em;
+}

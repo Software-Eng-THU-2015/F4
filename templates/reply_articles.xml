@@ -1,0 +1,28 @@
+$def with (toUser,fromUser,createTime, openID)
+<xml>
+<ToUserName><![CDATA[$toUser]]></ToUserName>
+<FromUserName><![CDATA[$fromUser]]></FromUserName>
+<CreateTime>$createTime</CreateTime>
+<MsgType><![CDATA[news]]></MsgType>
+<ArticleCount>3</ArticleCount>
+<Articles>
+<item>
+<Title><![CDATA[sport]]></Title> 
+<Description><![CDATA[description1]]></Description>
+<PicUrl><![CDATA[http://pic12.nipic.com/20110112/6119795_094015081163_2.jpg]]></PicUrl>
+<Url><![CDATA[http://f4ss.sinaapp.com/sport?openid=$openID]]></Url>
+</item>
+<item>
+<Title><![CDATA[sleep]]></Title>
+<Description><![CDATA[description]]></Description>
+<PicUrl><![CDATA[http://img4.imgtn.bdimg.com/it/u=1470908013,1728903265&fm=21&gp=0.jpg]]></PicUrl>
+<Url><![CDATA[http://f4ss.sinaapp.com/sleep?openid=$openID]]></Url>
+</item>
+<item>
+<Title><![CDATA[body]]></Title>
+<Description><![CDATA[description]]></Description>
+<PicUrl><![CDATA[http://pic.58pic.com/58pic/14/81/34/94W58PICsDj_1024.jpg ]]></PicUrl>
+<Url><![CDATA[http://f4ss.sinaapp.com/body?openid=$openID]]></Url>
+</item>
+</Articles>
+</xml> 
