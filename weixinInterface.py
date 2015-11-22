@@ -64,13 +64,20 @@ class WeixinInterface:
             if event == "subscribe":
                 userInfo = self.tool.get_user_msg(fromUser)
                 if userInfo == {}:
-                    self.db.insert_user(uname = 'Whoever', openid = fromUser, imageurl = "http://fb.topit.me/b/3c/6c/11480604151c06c3cbl.jpg")
+                    self.db.user.insert(openid = fromUser)
                 else:
-                    self.db.insert_user(uname = userInfo["nickname"], openid = fromUser, imageurl = userInfo["headimgurl"])
+                    self.db.user.insert(uname = userInfo["nickname"], openid = fromUser, imageurl = userInfo["headimgurl"])
                 return self.render.reply_text(fromUser, toUser, int(time.time()), "使用说明")
 
             if event == "unsubscribe":
-                self.db.delete_user(fromUser)
+                self.db.user.delete(fromUser)
+            
+            if event == "CLICK":
+                key = xml.find("EventKey").text
+                if key == "info":
+                    return self.render.reply_articles(fromUser,toUser,int(time.time()), fromUser)
+                if key == "follower":
+                    return self.render.reply_article(fromUser,toUser,int(time.time()), fromUser)
 
 		#推送图文信息
         return self.render.reply_articles(fromUser,toUser,int(time.time()), fromUser)

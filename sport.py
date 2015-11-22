@@ -17,5 +17,5 @@ class Sport:
         openid = row.openid
 
         #在数据库中查询用户运动数据
-        data = self.db.query_sport(openid)
+        data = self.db.sport.get(openid)
         return self.render.reply_sport(data[0].Step,data[1].Step,data[2].Step,data[3].Step,data[4].Step,data[5].Step,data[6].Step)

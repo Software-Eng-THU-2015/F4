@@ -4,18 +4,17 @@ import database
 
 class tool:
 	def __init__(self):
-		self.appId = "wxc63a35f0a56e6b5b"
-		self.appSecret = "d4624c36b6795d1d99dcf0547af5443d"
+		self.db = database.database()
+		self.accessToken = self.db.message.get_token()
+		self.appId = self.db.message.get_appid()
+		self.appSecret = self.db.message.get_appsecret()
 
 		self.BASEURL = "api.weixin.qq.com"
 		self.TOKENURL = "/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s" % (self.appId, self.appSecret)
 		self.USERURL = "/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"
 
 		self.DATAURL = "wrist.ssast2015.com"
-		self.TIMEURL = u"/bongdata/?startTime=%s 00:00:00&endTime=%s 24:00:00"
-
-		self.db = database.database()
-		self.accessToken = self.db.query_token()
+		self.TIMEURL = u"/bongdata/?startTime=%s 00:00:00&endTime=%s 24:00:00"		
 
 	def refresh_token(self):
         #更新token
@@ -23,7 +22,7 @@ class tool:
 		conn.request("GET", self.TOKENURL)
 		tokenJson = eval(conn.getresponse().read())
 		self.accessToken = tokenJson["access_token"]
-		self.db.update_token(self.accessToken)
+		self.db.message.update_token(self.accessToken)
 		conn.close()
 
 	def get_user_msg(self, userOpenId):	
