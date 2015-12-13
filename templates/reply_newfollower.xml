@@ -1,0 +1,16 @@
+$def with (toUser,fromUser,createTime,id,followerID, followeeID)
+<xml>
+<ToUserName><![CDATA[$toUser]]></ToUserName>
+<FromUserName><![CDATA[$fromUser]]></FromUserName>
+<CreateTime>$createTime</CreateTime>
+<MsgType><![CDATA[news]]></MsgType>
+<ArticleCount>1</ArticleCount>
+<Articles>
+<item>
+<Title><![CDATA[好友认证]]></Title> 
+<Description><![CDATA[用户$id想添加您为好友，同意请点击]]></Description>
+<PicUrl><![CDATA[/static/bgPC.jpg]]></PicUrl>
+<Url><![CDATA[http://f4ss.sinaapp.com/confirm?flrid=$followerID&fleid=$followeeID]]></Url>
+</item>
+</Articles>
+</xml>

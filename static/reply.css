@@ -1,33 +1,112 @@
 @font-face {
     font-family: mFont;
-    src: url('/static/215000EURO.ttf');
+    src: url('/static/fzyouxian.ttf');
 }
 
 .headText p {
-	text-align: center;
-	font-size: 5em;
-	font-style: oblique;
+    text-align: center;
+    font-size: 5em;
     font-family: mFont;
     letter-spacing: 0.2em;
 }
 
 .headText {
-    height: 40em;
-    padding-top: 15em;
+    height: 25em;
+    padding-top: 1em;
 }
 
 .box {
-    box-shadow: 0.3em 0.3em 0.45em #222222;
-    border-radius: 1em;
+    box-shadow: 0.5em 0.5em 0.65em #222222;
+    height: 22em;
 }
 
 .bgDiv {
     padding: 1em;
-    border-radius: 1em;
     box-shadow: 0.3em 0.3em 0.45em #222222;
     background-color: rgba(0,0,0,0.2);
 }
 
-#main {
+.followerlist {
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+
+.chartH {
     height: 43em;
+}
+
+.headerTitle {
+    height: 21em;
+    padding-top: 8em;
+}
+
+.headerTitle p {
+    text-align: center;
+    font-size: 7em;
+    font-family: mFont;
+    letter-spacing: 0.2em;
+}
+
+.formFontB p {
+    text-align: center;
+    font-size: 5em;
+    font-family: mFont;
+    letter-spacing: 0.2em;
+}
+
+.formFontB {
+    box-shadow: 0.5em 0.5em 0.65em #222222;
+    height: 10em;
+    padding-top: 1em;
+}
+
+.formFontL p {
+    text-align: right;
+    font-size: 3em;
+    font-family: mFont;
+    letter-spacing: 0.2em;
+}
+
+.formFontL {
+    height: 25em;
+    padding-top: 1em;
+}
+
+.formFontR p {
+    text-align: left;
+    font-size: 3em;
+    font-family: mFont;
+    letter-spacing: 0.2em;
+}
+
+.formFontR {
+    height: 25em;
+    padding-top: 1em;
+}
+
+.actContent {
+    box-shadow: 0.5em 0.5em 0.65em #222222;
+    padding: 10em;
+    padding-left: 12em;
+    padding-right: 12em;
+    background-color: #FFFFFF;
+    border-radius: 2em;
+    width: auto;
+    display:inline-block;
+    margin-right: 8em;
+    font-size: 3em;
+}
+
+.psContent {
+    position: relative;
+    width: auto;
+    border: 0.2em solid #EE2C2C;
+    padding: 0.3em;
+}
+
+.psValue {
+    position: relative;
+    display: block;
+    background: #EE2C2C;
+    height: 1em;
 }

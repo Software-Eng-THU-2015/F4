@@ -1,0 +1,16 @@
+$def with (toUser,fromUser,createTime, openID)
+<xml>
+<ToUserName><![CDATA[$toUser]]></ToUserName>
+<FromUserName><![CDATA[$fromUser]]></FromUserName>
+<CreateTime>$createTime</CreateTime>
+<MsgType><![CDATA[news]]></MsgType>
+<ArticleCount>1</ArticleCount>
+<Articles>
+<item>
+<Title><![CDATA[关心的人]]></Title> 
+<Description><![CDATA[关心的人]]></Description>
+<PicUrl><![CDATA[http://pic12.nipic.com/20110112/6119795_094015081163_2.jpg]]></PicUrl>
+<Url><![CDATA[http://f4ss.sinaapp.com/follower?openid=$openID]]></Url>
+</item>
+</Articles>
+</xml> 

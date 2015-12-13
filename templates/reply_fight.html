@@ -1,0 +1,71 @@
+$def with (uid, fid, data, uHY, fHY, result, length)
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Fight</title>
+    <link href="/static/reply.css" rel="stylesheet">
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #F9CDAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerTitle">
+        <p>PK!</p>
+    </div>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-xs-4">
+    			<div class="psContent">
+    				<div class="psValue" style="width:100%"></div>
+    			</div>
+    		</div>
+    		<div class="col-xs-2">
+    			<div style="text-align:left; font-size:2em">
+    				<strong>100</strong>
+    			</div>
+    		</div>
+    		<div class="col-xs-2">
+    			<div style="text-align:right; font-size:2em">
+    				<strong>100</strong>
+    			</div>
+    		</div>
+    		<div class="col-xs-4">
+    			<div class="psContent">
+    				<div class="psValue" style="width:100%"></div>
+    			</div>
+    		</div>
+    	</div>
+		$for i in range (0, length):
+    		<div class="row">
+                <p><font size="7em">$data[i]</font></p>
+    		</div>
+    		<div class="row">
+    			<div class="col-xs-4">
+    				<div class="psContent">
+    					<div class="psValue" style="width:$uHY[i]%"></div>
+    				</div>
+    			</div>
+    			<div class="col-xs-2">
+    				<div style="text-align:left; font-size:2em">
+    					<strong>$uHY[i]</strong>
+    				</div>
+    			</div>
+    			<div class="col-xs-2">
+    				<div style="text-align:right; font-size:2em">
+    					<strong>$fHY[i]</strong>
+    				</div>
+    			</div>
+    			<div class="col-xs-4">
+    				<div class="psContent">
+    					<div class="psValue" style="width:$fHY[i]%"></div>
+    				</div>
+    			</div>
+    		</div>
+    	<div class="row">
+            <p><font size="7em">$result</font></p>
+    	</div>
+    </div>
+</body>

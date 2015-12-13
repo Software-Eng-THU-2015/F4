@@ -26,8 +26,8 @@ class test_database_message(unittest.TestCase):
 class test_database_user(unittest.TestCase):
 	def setUp(self):
 		self.test_class = database.database()
-		self.test_user = {"openid": "testuser", "nickname": "username", "headimgurl": "http://baidu.com"}
-		self.test_new_user = {"openid": "testuser", "nickname": "new_username", "headimgurl": "new_headimgurl"}
+		self.test_user = {"openid": "testuser", "nickname": "username", "headimgurl": "http://baidu.com", "point": 0, "total_point": 0, "signin_time": None}
+		self.test_new_user = {"openid": "testuser", "nickname": "new_username", "headimgurl": "new_headimgurl", "point": 0, "total_point": 0, "signin_time": None}
 
 	def tearDown(self):
 		pass
@@ -64,6 +64,12 @@ class test_database_user(unittest.TestCase):
 		self.test_class.user.insert(openid = self.test_user["openid"], uname = self.test_user["nickname"], headimgurl = self.test_user["headimgurl"])
 		self.test_class.user.delete(openid = self.test_user["openid"])
 		self.assertEqual(self.test_class.user.get(openid = self.test_user["openid"]), {})
+
+	def test_user_sign_in(self):
+		self.test_class.user.insert(openid = self.test_user["openid"], uname = self.test_user["nickname"], headimgurl = self.test_user["headimgurl"])
+		self.test_class.user.sign_in(openid = self.test_user["openid"])
+		self.assertNotEqual(self.test_class.user.get(openid = self.test_user["openid"])["signin_time"], "0000-00-00 00:00:00")
+		self.test_class.user.delete(openid = self.test_user["openid"])
 
 class test_database_follower(unittest.TestCase):
 	def setUp(self):
@@ -142,3 +148,30 @@ class test_database_bong(unittest.TestCase):
 		self.test_class.bong.insert(self.data_sleep_3)
 
 		self.assertEqual(self.test_class.bong.get_sleep(self.data_sleep_1["openid"], self.date_sleep), {"dsleep": self.data_sleep_1["dsNum"] + self.data_sleep_2["dsNum"], "lsleep": self.data_sleep_1["lsNum"] + self.data_sleep_2["lsNum"]})
+
+class test_database_weapon(unittest.TestCase):
+	def setUp(self):
+		self.test_class = database.database()
+		self.test_openid = "test_openid"
+		self.test_weaponcode = 11
+		self.test_new_weaponcode = 22
+
+	def tearDown(self):
+		pass
+
+	def test_weapon_insert_get(self):
+		self.test_class.weapon.insert(openid = self.test_openid, weaponcode = self.test_weaponcode)
+		self.assertEqual(self.test_class.weapon.get(openid = self.test_openid), [self.test_weaponcode])
+		self.assertEqual(self.test_class.weapon.insert(openid = self.test_openid, weaponcode = self.test_weaponcode), -1)
+		self.test_class.weapon.delete(openid = self.test_openid)
+
+	def test_weapon_update(self):
+		self.test_class.weapon.insert(openid = self.test_openid, weaponcode = self.test_weaponcode)
+		self.test_class.weapon.update(openid = self.test_openid, old_weaponcode = self.test_weaponcode, new_weaponcode = self.test_new_weaponcode)
+		self.assertEqual(self.test_class.weapon.get(openid = self.test_openid), [self.test_new_weaponcode])
+		self.test_class.weapon.delete(openid = self.test_openid)
+
+	def test_weapon_delete(self):
+		self.test_class.weapon.insert(openid = self.test_openid, weaponcode = self.test_weaponcode)
+		self.test_class.weapon.delete(openid = self.test_openid)
+		self.assertEqual(self.test_class.weapon.get(openid = self.test_openid), [])

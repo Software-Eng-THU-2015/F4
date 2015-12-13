@@ -1,0 +1,87 @@
+$def with (data, data2, data3, myid)
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Follower</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/reply.css" rel="stylesheet">
+    <style>
+        body {
+            background: #F9CDAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerTitle">
+        <p>好友列表</p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="followerlist">
+                $if data:
+                    $for follower in data:
+                        <div class="headText" style="line-height: 21em">
+                            <div class="box" style="background-color:#D97450">
+                                <p onclick="javascript:location.href='http://f4ss.sinaapp.com/fight?uid=$myid&fid=$follower["id"]'">
+                                    $follower["name"]
+                                </p>
+                            </div>
+                        </div>
+            </div>
+        </div>
+        <div class="headerTitle">
+            <p>武器列表</p>
+        </div>
+        <div class="row">
+            <div class="followerlist">
+                $if data2:
+                    $for weapon in data2:
+                        $if weapon["upd"] == 1:
+                            <div class="col-xs-6">
+                                <div class="headText" style="line-height: 21em">
+                                    <div class="box" style="background-color:#E6B450">
+                                        <p>$weapon["name"]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="headText" style="line-height: 21em">
+                                    <div class="box" style="background-color:#C51F1F">
+                                        <p onclick="javascript:location.href='http://f4ss.sinaapp.com/weapon?uid=$myid&wid=$weapon["code"]'">升级武器</p>
+                                    </div>
+                                </div>
+                            </div>
+                        $else:
+                            <div class="headText" style="line-height: 21em">
+                                <div class="box" style="background-color:#FFE632">
+                                    <p>$weapon["name"]</p>
+                                </div>
+                            </div>
+            </div>
+        </div>
+        <div class="headerTitle">
+            <p>武器商店</p>
+        </div>
+        <div class="row">
+            <div class="followerlist">
+                $if data3:
+                    $for weapon in data3:
+                        <div class="col-xs-6">
+                            <div class="headText" style="line-height: 21em">
+                                <div class="box" style="background-color:#274862">
+                                    <p>$weapon["name"]</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="headText" style="line-height: 21em">
+                                <div class="box" style="background-color:#6BC235">
+                                    <p onclick="javascript:location.href='http://f4ss.sinaapp.com/weapon?uid=$myid&wid=$weapon["code"]&type=0'">购买武器</p>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+</body>

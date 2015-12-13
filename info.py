@@ -4,7 +4,7 @@ import os
 import database
 import datetime
 
-class Sleep:
+class Info:
     
     def __init__(self):
         self.app_root = os.path.dirname(__file__)
@@ -18,13 +18,22 @@ class Sleep:
         openid = row.openid
 
         #在数据库中查询用户运动数据
-        data = []
+        data1 = []
+        data2 = []
+        date_today = "2015-11-17"
+
+        for i in range(7):
+        	calories = self.db.bong.get_calories(openid, date_today)
+        	data1.append(calories)
+        	date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
+        	date_today = date_today.strftime("%Y-%m-%d")
+
         date_today = "2015-11-17"
 
         for i in range(7):
         	sleeps = self.db.bong.get_sleep(openid, date_today)
-        	data.append(sleeps)
+        	data2.append(sleeps)
         	date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
         	date_today = date_today.strftime("%Y-%m-%d")
 
-        return self.render.reply_sleep(data)
+        return self.render.reply_info(data1, data2)

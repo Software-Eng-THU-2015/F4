@@ -18,6 +18,8 @@ class database:
 		self.bong = bong(self.db)
 		self.follower = follower(self.db)
 		self.stranger = stranger(self.db)
+		self.weapon = weapon(self.db)
+		self.plan = plan(self.db)
 
 class message:
 	def __init__(self, db):
@@ -79,9 +81,25 @@ class user:
 			userdic["id"] = user.id
 			userdic["nickname"] = user.Uname
 			userdic["headimgurl"] = user.ImageUrl
+			userdic["point"] = user.Point
+			userdic["total_point"] = user.TotalPoint
+			userdic["signin_time"] = user.SignInTime
 		except:
 			userdic = {}
 		return userdic
+
+	def sign_in(self, openid):
+		return self.db.update("User", where = "OpenID = $id", vars = {"id": openid, }, SignInTime = datetime.datetime.now().strftime("%Y-%m-%d %X"))
+
+	def update_point(self, openid, new_point = -1, new_total_point = -1):
+		if new_point >= 0 and new_total_point >= 0:
+			return self.db.update("User", where = "OpenID = $id", vars = {"id": openid, }, Point = new_point, TotalPoint = new_total_point)
+		elif new_point >= 0:
+			return self.db.update("User", where = "OpenID = $id", vars = {"id": openid, }, Point = new_point)
+		elif new_total_point >= 0:
+			return self.db.update("User", where = "OpenID = $id", vars = {"id": openid, }, TotalPoint = new_total_point)
+		else:
+			return -1
 		
 class bong:
 	def __init__(self, db):
@@ -229,3 +247,76 @@ class stranger:
 			reply = index.FromUserID
 			reply_list.append(reply)
 		return reply_list
+
+
+class weapon:
+	def __init__(self, db):
+		self.db = db
+
+	def insert(self, openid, weaponcode):
+		if weaponcode <= 0:
+			return -1
+		weapon_list = self.db.query("select * from Weapon where OpenID = $id and WeaponCode = $wpcode", vars = {"id": openid, "wpcode": weaponcode, })
+		try:
+			tmp = weapon_list[0]
+			return -1
+		except:
+			return self.db.insert("Weapon", OpenID = openid, WeaponCode = weaponcode)
+
+	def delete(self, openid):
+		return self.db.delete("Weapon", where = "OpenID = $id", vars = {"id": openid, })
+
+	def update(self, openid, old_weaponcode, new_weaponcode):
+		if new_weaponcode < 0:
+			return -1
+		return self.db.update("Weapon", where = "OpenID = $id and WeaponCode = $wpcode", vars = {"id": openid, "wpcode": old_weaponcode, }, WeaponCode = new_weaponcode)
+
+	def get(self, openid):
+		weapon_list = self.db.query("select * from Weapon where OpenID = $id", vars = {"id": openid, })
+		reply_list = []
+		for index in weapon_list:
+			reply = index.WeaponCode
+			reply_list.append(reply)
+		return reply_list
+
+class plan:
+	def __init__(self, db):
+		self.db = db
+
+	def insert(self, openid, height, weight, goal_calo):
+		if height < 0 or weight < 0 or goal_calo < 0:
+			return -1
+		plan_list = self.db.query("select * from Plan where OpenID = $id", vars = {"id": openid, })
+		try:
+			tmp = plan_list[0]
+			return self.db.update("Plan", where = "OpenID = $id", vars = {"id": openid, }, Height = height, Weight = weight, GoalCalo = goal_calo)
+		except:
+			return self.db.insert("Plan", OpenID = openid, Height = height, Weight = weight, GoalCalo = goal_calo)
+
+	def delete(self, openid):
+		return self.db.delete("Plan", where = "OpenID = $id", vars = {"id": openid, })
+
+	def update(self, openid, height = -1, weight = -1, goal_calo = -1):
+		tmp_plan = self.get(openid)
+		if not tmp_plan:
+			return -1
+		if height < 0:
+			height = tmp_plan["height"]
+		if weight < 0:
+			weight = tmp_plan["weight"]
+		if goal_calo < 0:
+			goal_calo = tmp_plan["goal_calo"]
+
+		return self.db.update("Plan", where = "OpenID = $id", vars = {"id": openid, }, Height = height, Weight = weight, GoalCalo = goal_calo)
+
+	def get(self, openid):
+		plandic = {}
+		try:
+			plan = self.db.query("select * from Plan where OpenID = $id", vars = {"id": openid, })[0]
+			plandic["openid"] = plan.OpenID
+			plandic["height"] = plan.Height
+			plandic["weight"] = plan.Weight
+			plandic["goal_calo"] = plan.GoalCalo
+		except:
+			plandic = {}
+		return plandic

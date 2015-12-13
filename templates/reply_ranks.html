@@ -1,0 +1,34 @@
+$def with (data,myid)
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Follower</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/reply.css" rel="stylesheet">
+    <style>
+        body {
+            background: #F9CDAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerTitle">
+        <p>好友排行</p>
+    </div>
+	<div class="container">
+        <div class="row">
+            <div class="followerlist">
+                $if data:
+                    $for follower in data:
+                        <div class="headText" style="line-height: 10em">
+                            <div class="box" style="background-color:#D97450">
+                                <p onclick="javascript:location.href='http://f4ss.sinaapp.com/info?openid=$follower["id"]'">
+                                    $follower["name"]
+                                </p>
+                                <p>步数：$follower["steps"]</p>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</body>

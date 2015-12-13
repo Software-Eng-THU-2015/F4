@@ -1,3 +1,4 @@
+$def with (data)
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
@@ -6,27 +7,27 @@
     <link href="/static/reply.css" rel="stylesheet">
     <style>
         body {
-            background-image: url(/static/sleep.jpg);
-            background-repeat: no-repeat;
-            filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
-			-moz-background-size:100%;  
-    		background-size:100%; 
+            background: #4589BB;
         }
     </style>
 </head>
 <body>
+    <div class="headerTitle">
+        <p>睡眠数据</p>
+    </div>
     <div class="container">
         <div class="row">
             <div class="headText">
-                <div class="box">
+                <div class="box" style="background-color:#B2C8BB">
                     <p>今日睡眠时间</p>
-                    <p>2333333</p>
+                    <p>浅睡眠$data[0]["lsleep"]分钟</p>
+                    <p>深睡眠$data[0]["dsleep"]分钟</p>
                 </div>
             </div>
         </div>
         <div class="row">            
             <div class="bgDiv">            
-            	<div id="main"></div>
+            	<div id="main" class="chartH"></div>
             </div>
         </div>
     </div>
@@ -56,9 +57,8 @@
     				    text: '上周睡眠数据',
                         textStyle: {
                             fontSize: 35,
-                            color: '#8A2BE2',
+                            color: '#FFFFFF',
                         },
-    				    subtext: '测试数据'
     				},
                     
     				tooltip : {
@@ -73,7 +73,7 @@
                         x: 'right',
                         textStyle: {
                         	fontSize: 27,
-                            color: '#8A2BE2',
+                            color: '#FFFFFF',
                         }
     				},
                     
@@ -91,7 +91,7 @@
                             axisLabel : {
                                 textStyle: {
                                     fontSize: 30,
-                                    color: '#8A2BE2',
+                                    color: '#FFFFFF',
                                 }
                         	}
     				    }
@@ -103,7 +103,7 @@
                             axisLabel : {
                                 textStyle: {
                                     fontSize: 27,
-                                    color: '#8A2BE2',
+                                    color: '#FFFFFF',
                                 }
                         	}    				        
     				    }
@@ -111,17 +111,17 @@
                     
     				series : [
     				    {
-    				        name:'行走步数',
+    				        name:'深睡眠',
     				        type:'line',
     				        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-    				        data:[1100, 1100, 1500, 1300, 1200, 1300, 1000],
+    				        data:[$data[6]["dsleep"], $data[5]["dsleep"], $data[4]["dsleep"], $data[3]["dsleep"], $data[2]["dsleep"], $data[1]["dsleep"], $data[0]["dsleep"]],
     				        
     				    },
     				    {
-    				        name:'奔跑步数',
+    				        name:'浅睡眠',
     				        type:'line',
     				        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-    				        data:[5000, 6000, 4000, 5000, 3000, 2900, 3000],
+    				        data:[$data[6]["lsleep"], $data[5]["lsleep"], $data[4]["lsleep"], $data[3]["lsleep"], $data[2]["lsleep"], $data[1]["lsleep"], $data[0]["lsleep"]],
     				        
     				    }
     				]

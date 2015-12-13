@@ -14,10 +14,10 @@ class tool:
 		self.USERURL = "/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"
 
 		self.DATAURL = "wrist.ssast2015.com"
-		self.TIMEURL = u"/bongdata/?startTime=%s 00:00:00&endTime=%s 24:00:00"		
+		self.TIMEURL = "/bongdata/?startTime=%s 00:00:00&endTime=%s 24:00:00"		
 
 	def refresh_token(self):
-        #更新token
+		#更新token
 		conn = httplib.HTTPSConnection(self.BASEURL)
 		conn.request("GET", self.TOKENURL)
 		tokenJson = eval(conn.getresponse().read())
@@ -26,7 +26,7 @@ class tool:
 		conn.close()
 
 	def get_user_msg(self, userOpenId):	
-        #获取用户信息，如nickname
+		#获取用户信息，如nickname
 		conn = httplib.HTTPSConnection(self.BASEURL)
 		conn.request("GET", self.USERURL % (self.accessToken, userOpenId))
 		try:
@@ -47,10 +47,20 @@ class tool:
 		return {}
 
 	def get_data(self, date):
-        #从样例数据库获取数据
+		#从样例数据库获取数据
 		conn = httplib.HTTPConnection(self.DATAURL)
 		conn.request("GET", self.TIMEURL % (date,date))
 		try:
-			return eval(conn.getresponse().read())
+			data = eval(conn.getresponse().read())
 		except:
-			return {}
+			data = {}
+		conn.close()
+		return data
+
+	def get_data_from_txt(self):
+		fileObj = open("data", "r")
+		data = fileObj.read()
+		data = eval(data)
+		for index in data:
+			index["openid"] = "test_openid"
+			self.db.bong.insert(index)

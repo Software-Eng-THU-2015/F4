@@ -2,6 +2,7 @@
 import web
 import os
 import database
+import datetime
 
 class Sport:
     
@@ -17,5 +18,19 @@ class Sport:
         openid = row.openid
 
         #在数据库中查询用户运动数据
-        data = self.db.sport.get(openid)
-        return self.render.reply_sport(data[0].Step,data[1].Step,data[2].Step,data[3].Step,data[4].Step,data[5].Step,data[6].Step)
+        data = []
+        date_today = "2015-11-17"
+
+        for i in range(7):
+        	calories = self.db.bong.get_calories(openid, date_today)
+        	data.append(calories)
+        	date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
+        	date_today = date_today.strftime("%Y-%m-%d")
+        
+        goal_calos = self.db.plan.get(openid=openid)
+        if goal_calos:
+            goal_calo = goal_calos["goal_calo"]
+        else:
+            goal_calo = "尚未制定计划"
+
+        return self.render.reply_sport(data, openid, goal_calo)

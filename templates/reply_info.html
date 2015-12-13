@@ -1,0 +1,232 @@
+$def with (data1, data2)
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>他的个人信息</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/reply.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(/static/sleep.jpg);
+            background-repeat: no-repeat;
+            filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+            -moz-background-size:100%;  
+            background-size:100%; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="headText">
+                <div class="box">
+                    <p>今日睡眠数据</p>
+                    <p>浅睡眠$data2[0]["lsleep"]分钟</p>
+                    <p>深睡眠$data2[0]["dsleep"]分钟</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">            
+            <div class="bgDiv">            
+                <div style="height:43em" id="sleepChart"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="headText">
+                <div class="box">
+                    <p>今日运动数据</p>
+                    <p>$data1[0]</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">            
+            <div class="bgDiv">            
+                <div style="height:43em" id="sportChart"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        require (
+            [
+                'echarts',
+                'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/bar'
+            ],
+            DrawCharts
+        );
+        function DrawCharts(ec) {
+            DrawSleepChart(ec);
+            DrawSportChart(ec);
+        }
+        function DrawSleepChart(ec) {
+            // 基于准备好的dom，初始化echarts图表
+            var sleepChart = ec.init(document.getElementById('sleepChart')); 
+            
+            var option = {
+                title : {
+                    text: '上周睡眠数据',
+                    textStyle: {
+                        fontSize: 35,
+                        color: '#8A2BE2',
+                    },
+                    subtext: '测试数据'
+                },
+                
+                tooltip : {
+                    trigger: 'axis',
+                    textStyle: {
+                        fontSize: 30,
+                    }
+                },
+                
+                legend: {
+                    data:['深睡眠','浅睡眠'],
+                    x: 'right',
+                    textStyle: {
+                        fontSize: 27,
+                        color: '#8A2BE2',
+                    }
+                },
+                
+                toolbox: {
+                    show : false
+                },
+                
+                calculable : true,
+                
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['周一','周二','周三','周四','周五','周六','周日'],
+                        axisLabel : {
+                            textStyle: {
+                                fontSize: 30,
+                                color: '#8A2BE2',
+                            }
+                        }
+                    }
+                ],
+                
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            textStyle: {
+                                fontSize: 27,
+                                color: '#8A2BE2',
+                            }
+                        }                           
+                    }
+                ],
+                
+                series : [
+                    {
+                        name:'深睡眠',
+                        type:'line',
+                        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data:[$data2[6]["dsleep"], $data2[5]["dsleep"], $data2[4]["dsleep"], $data2[3]["dsleep"], $data2[2]["dsleep"], $data2[1]["dsleep"], $data2[0]["dsleep"]],
+                        
+                    },
+                    {
+                        name:'浅睡眠',
+                        type:'line',
+                        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data:[$data2[6]["lsleep"], $data2[5]["lsleep"], $data2[4]["lsleep"], $data2[3]["lsleep"], $data2[2]["lsleep"], $data2[1]["lsleep"], $data2[0]["lsleep"]],
+                        
+                    }
+                ]
+            };
+            sleepChart.setOption(option);
+            var ecConfig = require('echarts/config');
+        }
+        
+        function DrawSportChart(ec) {
+            var sportChart = ec.init(document.getElementById('sportChart')); 
+            
+            var option = {
+                title : {
+                    text: '上周运动数据',
+                    textStyle: {
+                        fontSize: 35,
+                        color: '#8A2BE2',
+                    },
+                    subtext: '测试数据'
+                },
+                
+                tooltip : {
+                    trigger: 'axis',
+                    textStyle: {
+                        fontSize: 30,
+                    }
+                },
+                
+                legend: {
+                    data:['行走步数','奔跑步数'],
+                    x: 'right',
+                    textStyle: {
+                        fontSize: 27,
+                        color: '#8A2BE2',
+                    }
+                },
+                
+                toolbox: {
+                    show : false
+                },
+                
+                calculable : true,
+                
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['周一','周二','周三','周四','周五','周六','周日'],
+                        axisLabel : {
+                            textStyle: {
+                                fontSize: 30,
+                                color: '#8A2BE2',
+                            }
+                        }
+                    }
+                ],
+                
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            textStyle: {
+                                fontSize: 27,
+                                color: '#8A2BE2',
+                            }
+                        }                           
+                    }
+                ],
+                
+                series : [
+                    {
+                        name:'行走步数',
+                        type:'line',
+                        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data:[$data1[6], $data1[5], $data1[4], $data1[3], $data1[2], $data1[1], $data1[0]],
+                        
+                    }
+                ]
+            };
+    
+            // 为echarts对象加载数据 
+            sportChart.setOption(option); 
+            var ecConfig = require('echarts/config');
+        }
+    
+    </script>
+</body>
