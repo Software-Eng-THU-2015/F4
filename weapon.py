@@ -18,9 +18,22 @@ class Weapon:
         row = web.input()
         uid = row.uid
         wid = row.wid
-        openid = self.db.user.get(id=uid)["openid"]
+        my = self.db.user.get(id=uid)
+        openid = my["openid"]
+        if my["point"] < 100:
+            result = 0
+            return self.render.reply_weapon(openid, result)
         if self.db.weapon.insert(openid, wid) == -1:
             nid = string.atoi(wid) + 7
+            if my["point"] < 500:
+                result = 0
+                return self.render.reply_weapon(openid, result)
             self.db.weapon.update(openid, wid, nid)
+            point = my["point"] - 500
+            self.db.user.update_point(openid, new_point = point)
+        else:
+            point = my["point"] - 100
+            self.db.user.update_point(openid, new_point = point)
         
-        return self.render.reply_weapon()
+        result = 1
+        return self.render.reply_weapon(openid, result)

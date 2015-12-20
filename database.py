@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import web
 import sae
 import datetime
+import httplib
 
 class database:
 	def __init__(self):
@@ -107,6 +109,20 @@ class bong:
 		self.data_type_1 = ["openid", "startTime", "endTime", "type", "subType"]
 		self.data_type_2 = ["distance", "speed", "calories", "steps", "actTime", "nonActTime", "dsNum", "lsNum", "wakeNum", "wakeTimes", "score"]
 
+		self.DATAURL = "wrist.ssast2015.com"
+		self.TIMEURL = "/bongdata/?startTime=%s&endTime=%s&user=%d"
+
+	def get_data(self, date_1, date_2, id):
+		#从样例数据库获取数据
+		conn = httplib.HTTPConnection(self.DATAURL)
+		conn.request("GET", self.TIMEURL % (date_1, date_2, id))
+		try:
+			data = eval(conn.getresponse().read())
+		except:
+			data = {}
+		conn.close()
+		return data		
+
 	'''def insert(self, openid, start_time, end_time, type, subtype, distance = 0, speed = 0, calories = 0, steps = 0, acttime = 0, nonacttime = 0, dsnum = 0, lsnum = 0, wakenum = 0, waketimes = 0, score = 0):
 		if type not in range(1, 4):
 			return -1
@@ -166,10 +182,18 @@ class bong:
 		pass
 
 	def get_calories(self, openid, date):
-		date_1 = date
-		date_2 = datetime.datetime.strptime(date, "%Y-%m-%d") + datetime.timedelta(days = 1)
-		date_2 = date_2.strftime("%Y-%m-%d")
+		date_1 = date + " 00:00:00"
+		date_2 = datetime.datetime.strptime(date_1, "%Y-%m-%d %H:%M:%S") + datetime.timedelta(days = 1)
+		date_2 = date_2.strftime("%Y-%m-%d %H:%M:%S")
+
 		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2", vars = {"date_1": date_1, "date_2": date_2, })
+
+		#try:
+		#	id = self.db.query("select * from User where id = $id", vars = {"id": id, })[0]["id"] % 100
+		#	list = self.get_data(date_1, date_2, id)
+		#expect:
+		#	return 0
+
 		calories = 0
 		try:
 			for index in list:
@@ -179,10 +203,18 @@ class bong:
 		return calories
 
 	def get_sleep(self, openid, date):
-		date_1 = date
-		date_2 = datetime.datetime.strptime(date, "%Y-%m-%d") + datetime.timedelta(days = 1)
-		date_2 = date_2.strftime("%Y-%m-%d")
-		list = self.db.query("select * from Bong where EndTime >= $date_1 and EndTime < $date_2 and Type = 1", vars = {"date_1": date_1, "date_2": date_2, })
+		date_2 = date + " 14:00:00"
+		date_1 = datetime.datetime.strptime(date_2, "%Y-%m-%d %H:%M:%S") - datetime.timedelta(days = 1)
+		date_1 = date_1.strftime("%Y-%m-%d %H:%M:%S")
+		
+		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2 and Type = 1", vars = {"date_1": date_1, "date_2": date_2, })
+
+		#try:
+		#	id = self.db.query("select * from User where id = $id", vars = {"id": id, })[0]["id"] % 100
+		#	list = self.get_data(date_1, date_2, id)
+		#expect:
+		#	return {"dsleep": 0, "lsleep": 0}
+		
 		dsleep = 0
 		lsleep = 0
 		try:
@@ -203,9 +235,9 @@ class follower:
 		reply_b = self.db.insert("Follower", FollowerID = follower_b, FollowingID = follower_a)
 		return reply_a and reply_b
 
-	def delete(self, follower_a, follower_b):
-		reply_a = self.db.delete("Follower", where = "FollowerID = $id_a and FollowingID = $id_b", vars = {"id_a": follower_a, "id_b": follower_b, })
-		reply_b = self.db.delete("Follower", where = "FollowerID = $id_a and FollowingID = $id_b", vars = {"id_a": follower_b, "id_b": follower_a, })
+	def delete(self, follower):
+		reply_a = self.db.delete("Follower", where = "FollowerID = $id", vars = {"id": follower, })
+		reply_b = self.db.delete("Follower", where = "FollowingID = $id", vars = {"id": follower, })
 		return reply_a and reply_b
 
 	def update(self):
@@ -234,8 +266,13 @@ class stranger:
 	def insert(self, to_user, from_user):
 		return self.db.insert("Stranger", ToUserID = to_user, FromUserID = from_user)
 
-	def delete(self, to_user, from_user):
-		return self.db.delete("Stranger", where = "ToUserID = $id_a and FromUserID = $id_b", vars = {"id_a": to_user, "id_b": from_user, })
+	def delete(self, to_user = 0, from_user = 0, user = 0):
+		if user:
+			reply_a = self.db.delete("Stranger", where = "ToUserID = $id", vars = {"id": user, })
+			reply_b = self.db.delete("Stranger", where = "FromUserID = $id", vars = {"id": user, })
+			return reply_a and reply_b
+		else:
+			return self.db.delete("Stranger", where = "ToUserID = $id_a and FromUserID = $id_b", vars = {"id_a": to_user, "id_b": from_user, })
 
 	def update(self):
 		pass

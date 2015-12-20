@@ -80,18 +80,27 @@ class WeixinInterface:
                 self.tool.get_data_from_txt()
                 return self.render.reply_text(from_user, to_user, int(time.time()), "insert ok")
 
-            if len(content.split('-', 4)) == 3:
-                sport_data = self.tool.get_data(content)
-                if sport_data == {}:
-                    return self.render.reply_text(from_user, to_user, int(time.time()), "该时段没有数据")
-                else:
-                    return self.render.reply_text(from_user, to_user, int(time.time()), repr(sport_data[0]))
+            if len(content.split('-', 4)) == 3 or len(content.split(' ', 4)) == 3:
+                calories = self.db.bong.get_calories(from_user, content)
+                sleep = self.db.bong.get_sleep(from_user, content)
+                try:
+                    reply = "%s的个人信息：\n消耗卡路里为%d千焦耳\n浅睡眠时长%d分钟\n深睡眠时长%d分钟" %(content, calories, sleep["lsleep"], sleep["dsleep"])
+                    return self.render.reply_text(from_user, to_user, int(time.time()), reply)
+                except:
+                    return self.render.reply_text(from_user, to_user, int(time.time()), "该时段查无数据")
             
         
             if content.isdigit():
                 uid = self.db.user.get(openid=from_user)
-                self.db.stranger.insert(to_user=int(content), from_user=uid["id"])
-                return self.render.reply_text(from_user, to_user,int(time.time()), "已将您的好友请求发送。")
+                if int(content) == int(uid["id"]):
+                    return self.render.reply_text(from_user, to_user,int(time.time()), "认识你自己。")
+                if not self.db.user.get(id = int(content)):
+                    return self.render.reply_text(from_user, to_user,int(time.time()), "该用户不存在。")
+                if not self.db.follower.is_followed(uid["id"], int(content)):
+                    self.db.stranger.insert(to_user=int(content), from_user=uid["id"])
+                    return self.render.reply_text(from_user, to_user,int(time.time()), "已将您的好友请求发送。")
+                else:     
+                    return self.render.reply_text(from_user, to_user,int(time.time()), "你们已经是好友关系。")
             
             return self.render.reply_text(from_user, to_user, int(time.time()), "未知语义")
 
@@ -108,8 +117,12 @@ class WeixinInterface:
                 return self.render.reply_text(from_user, to_user, int(time.time()), "使用说明")
 
             if event == "unsubscribe":
-                self.db.user.delete(from_user)
                 self.db.weapon.delete(from_user)
+                uid = self.db.user.get(openid = from_user)["id"]
+                self.db.follower.delete(uid)
+                self.db.stranger.delete(user=uid)
+                self.db.user.delete(from_user)
+
             
             if event == "CLICK":
                 key = xml.find("EventKey").text
@@ -129,6 +142,13 @@ class WeixinInterface:
                     self.db.user.sign_in(from_user)
                     randid = random.randint(1,7)
                     randslogan = {"1":"流水不腐，户枢不蠹，动也。\n——吕不韦", "2":"更高，更快，更强。\n——亨利·马丁·提东", "3":"以自然之道，养自然之身。\n——欧阳修", "4":"生命在于运动。\n——伏尔泰", "5":"运动是一切生命的源泉。\n——达·芬奇", "6":"科学的基础是健康的身体。\n——居里夫人", "7":"为祖国健康工作五十年！"}
+                    my = self.db.user.get(openid = from_user)
+                    date_lastday = datetime.datetime.strptime(now_date, "%Y-%m-%d") - datetime.timedelta(days = 1)
+                    date_lastday = date_lastday.strftime("%Y-%m-%d")
+                    new = self.db.bong.get_calories(from_user, date_lastday)
+                    total = my["total_point"] + new/10 + 20
+                    point = my["point"] + new/10 + 20
+                    self.db.user.update_point(from_user, point, total)
                     return self.render.reply_text(from_user,to_user,int(time.time()), randslogan["%d" %randid])
                 if key == "pk":
                     return self.render.reply_pkpage(from_user,to_user,int(time.time()), from_user)

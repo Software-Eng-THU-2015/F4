@@ -1,0 +1,50 @@
+$def with (myself)
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>PersonalInformation</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/reply.css" rel="stylesheet">
+    <style>
+        body {
+            background: #F9CDAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerTitle">
+        <p>个人信息</p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="headText smallHeight">
+                <div class="box" style="background-color:#FFFFFF">
+                    <p>ID:$myself["id"]</p>
+                    <p>$myself["Uname"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="headText XlargeHeight">
+                    <div class="box" style="background-color:#FFFFFF">
+                        <p>身高</p>
+                        <p>$myself["height"]厘米</p>
+                        <p>体重</p>
+                        <p>$myself["weight"]千克</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="headText XlargeHeight">
+                    <div class="box" style="background-color:#FFFFFF">
+                        <p>总积分</p>
+                        <p>$myself["total_point"]</p>
+                        <p>可用积分</p>
+                        <p>$myself["point"]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

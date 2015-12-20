@@ -1,4 +1,4 @@
-$def with (data,data2, myid)
+$def with (data, data2, myid)
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
@@ -16,48 +16,51 @@ $def with (data,data2, myid)
         <p>好友列表</p>
     </div>
 	<div class="container">
-        <div class="row">
-            <div class="followerlist">
-                $if data:
-                    $for follower in data:
-                        <div class="headText" style="line-height: 21em">
+		$if data:
+			$for follower in data:
+        		<div class="row">
+            		<div class="followerlist">
+                        <div class="headText regularHeight">
                             <div class="box" style="background-color:#D97450">
                                 <p onclick="javascript:location.href='http://f4ss.sinaapp.com/info?openid=$follower["id"]'">
                                     $follower["name"]
                                 </p>
                             </div>
                         </div>
-            </div>
+            		</div>
+        		</div>
+	</div>
+    $if data2:
+        <div class="headerTitle">
+            <p>可能认识的人</p>
         </div>
-        $if data2:
-            <div class="headerTitle">
-                <p>可能认识的人</p>
-            </div>
-        	<div class="row">
-                <div class="followerlist">
-                    $for stranger in data2:
-                        <div class="col-xs-6">
-                            <div class="headText">
-                                <div class="box">
-                                    <p>$stranger["name"]</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="headText">
-                                <div class="box">
-                                    <p onclick="javascript:location.href='http://f4ss.sinaapp.com/confirm?fleid=$myid&flrid=$stranger["id"]&type=1'">接受</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="headText">
-                                <div class="box">
-                                    <p onclick="javascript:location.href='http://f4ss.sinaapp.com/confirm?fleid=$myid&flrid=$stranger["id"]&type=0'">拒绝</p>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
+		<div class="container">
+			$for stranger in data2:
+				<div class="row">
+					<div class="followerlist">
+						<div class="col-xs-6">
+							<div class="headText smallHeight">
+								<div class="box">
+									<p>$stranger["name"]</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="headText  smallHeight">
+								<div class="box" style="background-color:#6BC235">
+									<p onclick="javascript:location.href='http://f4ss.sinaapp.com/confirm?fleid=$myid&flrid=$stranger["id"]&type=1'">接受</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="headText  smallHeight">
+								<div class="box" style="background-color:#C51F1F">
+									<p onclick="javascript:location.href='http://f4ss.sinaapp.com/confirm?fleid=$myid&flrid=$stranger["id"]&type=0'">拒绝</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
     </div>
 </body>

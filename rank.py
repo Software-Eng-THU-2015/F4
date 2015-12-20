@@ -34,6 +34,8 @@ class Rank:
         person["steps"] = 1000
         friends.append(person)
         
+        friends.sort(key = lambda e: e['steps'], reverse = True)
+        
         #orted(friends, key = lambda person:person.steps, reverse = True)
             
         return self.render.reply_ranks(friends, myid)

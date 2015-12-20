@@ -135,22 +135,22 @@ class Fight:
                         sharm = "%d" %harm
                         desc = fighter_1 + u"射出爱神丘比特之箭！对" + fighter_2 + u"造成了" + sharm + u"点伤害"
                         data.append(desc)
-                    elif weapon == 15:
+                    elif weapon == 31:
                         hp_1 = 100
                         desc = fighter_1 + u"继承了西西弗斯的意志！生命完全恢复！"
                         data.append(desc)
-                    elif weapon == 16:
+                    elif weapon == 32:
                         hp_2 = hp_1
                         hp_2 -= 10
                         desc = fighter_1 + u"发动了因果律武器！同时对" + fighter_2 + u"造成了10点伤害"
                         data.append(desc)
-                    elif weapon == 17:
+                    elif weapon == 33:
                         hp_2 -= hp_1
                         sharm = "%d" %hp_1
                         hp_1 = 1
                         desc = fighter_1 + u"决定荆轲刺秦！要与" + fighter_2 + u"同归于尽！造成" + sharm + u"伤害，自身濒死"
                         data.append(desc)
-                    elif weapon == 18:
+                    elif weapon == 34:
                         factor = random.randint(1,2)
                         if factor == 1:
                             hp_2 -= 30
@@ -160,7 +160,7 @@ class Fight:
                             hp_1 -= 5
                             desc = fighter_1 + u"剪子包袱锤失败！损失5点生命"
                             data.append(desc)
-                    elif weapon == 19:
+                    elif weapon == 35:
                         if list_2:
                             weapon = list_2.pop()
                             list_1.append(weapon)
@@ -302,22 +302,22 @@ class Fight:
                         sharm = "%d" %harm
                         desc = fighter_2 + u"射出爱神丘比特之箭！对" + fighter_1 + u"造成了" + sharm + u"点伤害"
                         data.append(desc)
-                    elif weapon == 15:
+                    elif weapon == 31:
                         hp_2 = 100
                         desc = fighter_2 + u"继承了西西弗斯的意志！生命完全恢复！"
                         data.append(desc)
-                    elif weapon == 16:
+                    elif weapon == 32:
                         hp_1 = hp_2
                         hp_1 -= 10
                         desc = fighter_2 + u"发动了因果律武器！同时对" + fighter_1 + u"造成了10点伤害"
                         data.append(desc)
-                    elif weapon == 17:
+                    elif weapon == 33:
                         hp_1 -= hp_2
                         sharm = "%d" %hp_2
                         hp_2 = 1
                         desc = fighter_2 + u"决定荆轲刺秦！要与" + fighter_1 + u"同归于尽！造成" + sharm + u"伤害，自身濒死"
                         data.append(desc)
-                    elif weapon == 18:
+                    elif weapon == 34:
                         factor = random.randint(1,2)
                         if factor == 1:
                             hp_1 -= 30
@@ -327,7 +327,7 @@ class Fight:
                             hp_2 -= 5
                             desc = fighter_2 + u"剪子包袱锤失败！损失5点生命"
                             data.append(desc)
-                    elif weapon == 19:
+                    elif weapon == 35:
                         if list_1:
                             weapon = list_1.pop()
                             list_2.append(weapon)

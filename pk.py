@@ -27,9 +27,9 @@ class Pk:
             person["openid"] = self.db.user.get(id=fid)["openid"]
             friends.append(person)
 
-        weaponlist = {"1":"拳套", "2":"大刀", "3":"短剑","5":"拳法","6":"长枪","7":"弓箭","8":"天马流星拳","9":"青龙偃月刀","10":"饮血剑","12":"七伤拳","13":"朗基奴斯枪","14":"丘比特之箭","15":"西西弗斯的意志","16":"因果律武器","17":"荆轲刺秦","18":"剪子包袱锤","19":"飞龙探云手"}
+        weaponlist = {"1":"拳套", "2":"大刀", "3":"短剑","5":"拳法","6":"长枪","7":"弓箭","8":"天马流星拳","9":"青龙偃月刀","10":"饮血剑","12":"七伤拳","13":"朗基奴斯枪","14":"丘比特之箭","31":"西西弗斯的意志","32":"因果律武器","33":"荆轲刺秦王","34":"剪子包袱锤","35":"飞龙探云手"}
         weapons = []
-        weapon_tobuy = [1,2,3,5,6,7]
+        weapon_tobuy = [1,2,3,5,6,7,31,32,33,34,35]
         weapon_data = self.db.weapon.get(openid)
         for weapon in weapon_data:
             w = {}
@@ -55,6 +55,10 @@ class Pk:
             w = {}
             w["code"] = weapon
             w["name"] = weaponlist["%d" %weapon]
+            if weapon > 7:
+                w["upd"] = 1
+            else:
+                w["upd"] = 0
             newweapons.append(w)
 
  

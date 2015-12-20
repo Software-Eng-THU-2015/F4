@@ -11,10 +11,7 @@ class tool:
 
 		self.BASEURL = "api.weixin.qq.com"
 		self.TOKENURL = "/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s" % (self.appId, self.appSecret)
-		self.USERURL = "/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"
-
-		self.DATAURL = "wrist.ssast2015.com"
-		self.TIMEURL = "/bongdata/?startTime=%s 00:00:00&endTime=%s 24:00:00"		
+		self.USERURL = "/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"		
 
 	def refresh_token(self):
 		#更新token
@@ -45,22 +42,3 @@ class tool:
 		except:
 			pass
 		return {}
-
-	def get_data(self, date):
-		#从样例数据库获取数据
-		conn = httplib.HTTPConnection(self.DATAURL)
-		conn.request("GET", self.TIMEURL % (date,date))
-		try:
-			data = eval(conn.getresponse().read())
-		except:
-			data = {}
-		conn.close()
-		return data
-
-	def get_data_from_txt(self):
-		fileObj = open("data", "r")
-		data = fileObj.read()
-		data = eval(data)
-		for index in data:
-			index["openid"] = "test_openid"
-			self.db.bong.insert(index)

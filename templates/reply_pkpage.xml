@@ -9,7 +9,7 @@ $def with (toUser,fromUser,createTime, openID)
 <item>
 <Title><![CDATA[好友对战]]></Title> 
 <Description><![CDATA[好友对战]]></Description>
-<PicUrl><![CDATA[http://pic12.nipic.com/20110112/6119795_094015081163_2.jpg]]></PicUrl>
+<PicUrl><![CDATA[http://img5.imgtn.bdimg.com/it/u=1952402370,1996587893&fm=21&gp=0.jpg]]></PicUrl>
 <Url><![CDATA[http://f4ss.sinaapp.com/pk?openid=$openID]]></Url>
 </item>
 </Articles>

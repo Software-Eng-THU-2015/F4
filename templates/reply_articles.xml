@@ -19,9 +19,9 @@ $def with (toUser,fromUser,createTime, openID)
 <Url><![CDATA[http://f4ss.sinaapp.com/sleep?openid=$openID]]></Url>
 </item>
 <item>
-<Title><![CDATA[body]]></Title>
+<Title><![CDATA[myself]]></Title>
 <Description><![CDATA[description]]></Description>
-<PicUrl><![CDATA[http://pic.58pic.com/58pic/14/81/34/94W58PICsDj_1024.jpg ]]></PicUrl>
+<PicUrl><![CDATA[http://img1.imgtn.bdimg.com/it/u=2738372617,801592230&fm=21&gp=0.jpg]]></PicUrl>
 <Url><![CDATA[http://f4ss.sinaapp.com/body?openid=$openID]]></Url>
 </item>
 </Articles>

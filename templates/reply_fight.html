@@ -15,57 +15,71 @@ $def with (uid, fid, data, uHY, fHY, result, length)
     <div class="headerTitle">
         <p>PK!</p>
     </div>
-    <div class="container">
+    <div id="ct" class="container">
     	<div class="row">
-    		<div class="col-xs-4">
+    		<div class="col-xs-5">
     			<div class="psContent">
-    				<div class="psValue" style="width:100%"></div>
+    				<div id="uh" class="psValue" style="width:100%"></div>
     			</div>
     		</div>
-    		<div class="col-xs-2">
+    		<div class="col-xs-1">
     			<div style="text-align:left; font-size:2em">
-    				<strong>100</strong>
+    				<strong id="uhpnum">100</strong>
     			</div>
     		</div>
-    		<div class="col-xs-2">
+    		<div class="col-xs-1">
     			<div style="text-align:right; font-size:2em">
-    				<strong>100</strong>
+    				<strong id="fhpnum">100</strong>
     			</div>
     		</div>
-    		<div class="col-xs-4">
+    		<div class="col-xs-5">
     			<div class="psContent">
-    				<div class="psValue" style="width:100%"></div>
+    				<div id="fh" class="psValue" style="width:100%"></div>
     			</div>
     		</div>
     	</div>
-		$for i in range (0, length):
-    		<div class="row">
-                <p><font size="7em">$data[i]</font></p>
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-4">
-    				<div class="psContent">
-    					<div class="psValue" style="width:$uHY[i]%"></div>
-    				</div>
-    			</div>
-    			<div class="col-xs-2">
-    				<div style="text-align:left; font-size:2em">
-    					<strong>$uHY[i]</strong>
-    				</div>
-    			</div>
-    			<div class="col-xs-2">
-    				<div style="text-align:right; font-size:2em">
-    					<strong>$fHY[i]</strong>
-    				</div>
-    			</div>
-    			<div class="col-xs-4">
-    				<div class="psContent">
-    					<div class="psValue" style="width:$fHY[i]%"></div>
-    				</div>
-    			</div>
-    		</div>
-    	<div class="row">
-            <p><font size="7em">$result</font></p>
-    	</div>
+        <div class="row">
+            <div class="headText">
+            <p id="res">战斗开始!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="headText">
+            <p>战斗记录</p>
+            </div>
+        </div>
     </div>
+    <script type="text/javascript">
+        var counter = 0
+        var maxtime = $length
+        var uH = new Array()
+        var fH = new Array()
+        var detail = new Array()
+        $for i in range(0, length)
+            uH[$i] = $uHY[i]
+            fH[$i] = $fHY[i]
+            detail[$i] = "$data[i]"
+        var rootDom = document.getElementById('ct')
+        var uhDom = document.getElementById('uh')
+        var uhNum = document.getElementById('uhpnum')
+        var fhDom = document.getElementById('fh')
+        var fhNum = document.getElementById('fhpnum')
+        var rest = document.getElementById('res')
+        var circle = setInterval("update()",1000);
+        function update() {
+            var newDiv = document.createElement('div')
+            newDiv.className = "headText"
+            newDiv.innerHTML = "<p>" + detail[counter] + "</p>"
+            rootDom.appendChild(newDiv)
+            uhDom.style.width='' + uH[counter] + '%'
+            uhNum.innerHTML = '' + uH[counter]
+            fhDom.style.width='' + fH[counter] + '%'
+            fhNum.innerHTML = '' + fH[counter]
+            counter += 1
+            if (counter >= maxtime) {
+                rest.innerHTML = "$result"
+                clearInterval(circle)
+            }
+        }
+    </script>
 </body>

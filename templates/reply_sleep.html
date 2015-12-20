@@ -17,7 +17,7 @@ $def with (data)
     </div>
     <div class="container">
         <div class="row">
-            <div class="headText">
+            <div class="headText largeHeight">
                 <div class="box" style="background-color:#B2C8BB">
                     <p>今日睡眠时间</p>
                     <p>浅睡眠$data[0]["lsleep"]分钟</p>
@@ -25,8 +25,8 @@ $def with (data)
                 </div>
             </div>
         </div>
-        <div class="row">            
-            <div class="bgDiv">            
+        <div class="row">
+            <div class="bgDiv">
             	<div id="main" class="chartH"></div>
             </div>
         </div>
@@ -50,8 +50,8 @@ $def with (data)
             ],
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('main')); 
-                
+                var myChart = ec.init(document.getElementById('main'));
+
                 var option = {
                     title : {
     				    text: '上周睡眠数据',
@@ -60,14 +60,14 @@ $def with (data)
                             color: '#FFFFFF',
                         },
     				},
-                    
+
     				tooltip : {
     				    trigger: 'axis',
                         textStyle: {
                         	fontSize: 30,
                         }
     				},
-                    
+
     				legend: {
     				    data:['深睡眠','浅睡眠'],
                         x: 'right',
@@ -76,13 +76,13 @@ $def with (data)
                             color: '#FFFFFF',
                         }
     				},
-                    
+
     				toolbox: {
     				    show : false
     				},
-                    
+
     				calculable : true,
-                    
+
     				xAxis : [
     				    {
     				        type : 'category',
@@ -96,7 +96,7 @@ $def with (data)
                         	}
     				    }
     				],
-                    
+
     				yAxis : [
     				    {
     				        type : 'value',
@@ -105,30 +105,30 @@ $def with (data)
                                     fontSize: 27,
                                     color: '#FFFFFF',
                                 }
-                        	}    				        
+                        	}
     				    }
     				],
-                    
+
     				series : [
     				    {
     				        name:'深睡眠',
     				        type:'line',
     				        itemStyle: {normal: {areaStyle: {type: 'default'}}},
     				        data:[$data[6]["dsleep"], $data[5]["dsleep"], $data[4]["dsleep"], $data[3]["dsleep"], $data[2]["dsleep"], $data[1]["dsleep"], $data[0]["dsleep"]],
-    				        
+
     				    },
     				    {
     				        name:'浅睡眠',
     				        type:'line',
     				        itemStyle: {normal: {areaStyle: {type: 'default'}}},
     				        data:[$data[6]["lsleep"], $data[5]["lsleep"], $data[4]["lsleep"], $data[3]["lsleep"], $data[2]["lsleep"], $data[1]["lsleep"], $data[0]["lsleep"]],
-    				        
+
     				    }
     				]
                 };
-        
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
             }
         );
     </script>

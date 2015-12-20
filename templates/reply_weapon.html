@@ -1,1 +1,28 @@
-武器更新成功。
+$def with (openID, result)
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>WeaponUpdate</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/reply.css" rel="stylesheet">
+    <style>
+        body {
+            background: #F9CDAD;
+        }
+    </style>
+</head>
+<body>
+    $if result == 1:
+        <div class="headerTitle"><p>武器库已更新</p></div>
+    $else:
+        <div class="headerTitle"><p>积分不足</p></div>
+    <div class="container">
+        <div class="row">
+            <div class="headText regularHeight">
+                <div class="box" style="background-color:#83AF9B">
+                    <p onclick="javascript:location.href='http://f4ss.sinaapp.com/pk?openid=$openID'">返回PK页面</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

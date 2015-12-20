@@ -16,11 +16,11 @@ $def with (data,myid)
         <p>好友排行</p>
     </div>
 	<div class="container">
-        <div class="row">
-            <div class="followerlist">
-                $if data:
-                    $for follower in data:
-                        <div class="headText" style="line-height: 10em">
+		$if data:
+			$for follower in data:
+        		<div class="row">
+            		<div class="followerlist">
+                        <div class="headText smallHeight">
                             <div class="box" style="background-color:#D97450">
                                 <p onclick="javascript:location.href='http://f4ss.sinaapp.com/info?openid=$follower["id"]'">
                                     $follower["name"]
@@ -28,7 +28,7 @@ $def with (data,myid)
                                 <p>步数：$follower["steps"]</p>
                             </div>
                         </div>
-            </div>
-        </div>
+            		</div>
+        		</div>
     </div>
 </body>

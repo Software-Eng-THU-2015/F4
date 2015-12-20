@@ -18,7 +18,7 @@ $def with (data, openid, goal_calo)
     <div class="container">
         <div class="row">
             <div class="col-xs-6">
-                <div class="headText" style="line-height: 11em">
+                <div class="headText smallHeight">
                     <div class="box" style="background-color:#FE4365">
                         <p>运动步数</p>
                         <p>$data[0]</p>
@@ -26,7 +26,7 @@ $def with (data, openid, goal_calo)
                 </div>
             </div>
             <div class="col-xs-6">
-                <div class="headText" style="line-height: 21em">
+                <div class="headText regularHeight">
                     <div class="box" style="background-color:#83AF9B">
                         <p onclick="javascript:location.href='http://f4ss.sinaapp.com/plan?openid=$openid'">制定计划</p>
                     </div>
@@ -34,7 +34,7 @@ $def with (data, openid, goal_calo)
             </div>
         </div>
         <div class="row">
-            <div class="headText" style="line-height: 11em">
+            <div class="headText smallHeight">
                 <div class="box" style="background-color:#1DBF97">
                     <p>目标卡路里</p>
                     <p>$goal_calo</p>
@@ -42,7 +42,7 @@ $def with (data, openid, goal_calo)
             </div>
         </div>
         <div class="row">
-            <div class="bgDiv">            
+            <div class="bgDiv">
                 <div id="main" class = "chartH"></div>
             </div>
         </div>
@@ -65,8 +65,8 @@ $def with (data, openid, goal_calo)
             ],
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('main')); 
-                
+                var myChart = ec.init(document.getElementById('main'));
+
                 var option = {
                     title : {
                         text: '上周运动数据',
@@ -75,29 +75,29 @@ $def with (data, openid, goal_calo)
                             color: '#FFFFFF',
                         }
                     },
-                    
+
                     tooltip : {
                         trigger: 'axis',
                         textStyle: {
                             fontSize: 30,
                         }
                     },
-                    
+
                     legend: {
-                        data:['行走步数','奔跑步数'],
+                        data:['行走步数'],
                         x: 'right',
                         textStyle: {
                             fontSize: 27,
                             color: '#FFFFFF',
                         }
                     },
-                    
+
                     toolbox: {
                         show : false
                     },
-                    
+
                     calculable : true,
-                    
+
                     xAxis : [
                         {
                             type : 'category',
@@ -111,7 +111,7 @@ $def with (data, openid, goal_calo)
                             }
                         }
                     ],
-                    
+
                     yAxis : [
                         {
                             type : 'value',
@@ -120,23 +120,23 @@ $def with (data, openid, goal_calo)
                                     fontSize: 27,
                                     color: '#FFFFFF',
                                 }
-                            }                           
+                            }
                         }
                     ],
-                    
+
                     series : [
                         {
                             name:'行走步数',
                             type:'line',
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
                             data:[$data[6], $data[5], $data[4], $data[3], $data[2], $data[1], $data[0]],
-                            
+
                         }
                     ]
                 };
-        
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
             }
         );
     </script>
