@@ -185,21 +185,24 @@ class bong:
 		date_1 = date + " 00:00:00"
 		date_2 = datetime.datetime.strptime(date_1, "%Y-%m-%d %H:%M:%S") + datetime.timedelta(days = 1)
 		date_2 = date_2.strftime("%Y-%m-%d %H:%M:%S")
-
+		
 		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2", vars = {"date_1": date_1, "date_2": date_2, })
-
-		#try:
-		#	id = self.db.query("select * from User where id = $id", vars = {"id": id, })[0]["id"] % 100
-		#	list = self.get_data(date_1, date_2, id)
-		#expect:
-		#	return 0
-
 		calories = 0
 		try:
 			for index in list:
 				calories += index.Calories
 		except:
 			calories = 0
+
+		'''try:
+			id = self.db.query("select * from User where OpenID = $id", vars = {"id": openid, })[0].id % 100
+			list = self.get_data(date_1, date_2, id)
+		except:
+			return 0
+		calories = 0
+		for index in list:
+			calories += index["calories"]'''
+
 		return calories
 
 	def get_sleep(self, openid, date):
@@ -207,14 +210,7 @@ class bong:
 		date_1 = datetime.datetime.strptime(date_2, "%Y-%m-%d %H:%M:%S") - datetime.timedelta(days = 1)
 		date_1 = date_1.strftime("%Y-%m-%d %H:%M:%S")
 		
-		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2 and Type = 1", vars = {"date_1": date_1, "date_2": date_2, })
-
-		#try:
-		#	id = self.db.query("select * from User where id = $id", vars = {"id": id, })[0]["id"] % 100
-		#	list = self.get_data(date_1, date_2, id)
-		#expect:
-		#	return {"dsleep": 0, "lsleep": 0}
-		
+		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2 and Type = 1", vars = {"date_1": date_1, "date_2": date_2, })		
 		dsleep = 0
 		lsleep = 0
 		try:
@@ -224,6 +220,18 @@ class bong:
 		except:
 			dsleep = 0
 			lsleep = 0
+
+		'''try:
+			id = self.db.query("select * from User where OpenID = $id", vars = {"id": openid, })[0].id % 100
+			list = self.get_data(date_1, date_2, id)
+		except:
+			return {"dsleep": 0, "lsleep": 0}
+		dsleep = 0
+		lsleep = 0
+		for index in list:
+			dsleep += index["dsNum"]
+			lsleep += index["lsNum"]'''
+
 		return {"dsleep": dsleep, "lsleep": lsleep}
 
 class follower:
