@@ -1,0 +1,41 @@
+f4ss:
+ image: f4ss:1.0
+ environment:
+  - SITE_DOMAIN=softeng9.zjzs.levy.at
+  - TOKEN=$TOKEN
+  - APP_ID=$APP_ID
+  - APP_SECRET=$APP_SECRET
+  - DB_NAME=f4ss
+  - DB_USER=softeng9
+  - DB_PASSWORD=$DB_PASSWORD
+  - DB_HOST=db
+ links:
+  - db
+ volumes:
+  - ./app/static:/usr/src/app/static
+ privileged: true
+ restart: always
+
+db:
+ image: mysql/mysql-server:5.6
+ environment:
+  - MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD
+  - MYSQL_DATABASE=f4ss
+  - MYSQL_USER=softeng9
+  - MYSQL_PASSWORD=$DB_PASSWORD
+ volumes:
+  - ./datadir:/var/lib/mysql
+  - ./db:/docker-entrypoint-initdb.d
+ restart: always
+
+web:
+ image: nginx:1.9.8
+ volumes:
+  - ./app/uwsgi_params:/etc/nginx/conf.d/uwsgi_params:ro
+  - ./app/f4ss_nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  - ./app/static:/usr/src/app/static:ro
+ links:
+  - f4ss
+ ports:
+  - "4709:80"
+ restart: always
