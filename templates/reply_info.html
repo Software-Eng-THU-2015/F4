@@ -1,4 +1,4 @@
-$def with (data1, data2)
+$def with (data1, data2, uid, fid, SITE_DOMAIN)
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -31,13 +31,23 @@ $def with (data1, data2)
             <div class="headText smallHeight">
                 <div class="box" style="background-color:#1DBF97">
                     <p>今日运动数据</p>
-                    <p>$data1[0]</p>
+                    <p>$data1[0]卡路里</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="bgDiv">
                 <div style="height:43em" id="sportChart"></div>
+            </div>
+        </div>
+        <div class="row">
+            <br><br>
+        </div>
+        <div class="row">
+            <div class="headText regularHeight">
+                <div class="box" style="background-color:#C51F1F">
+                    <p onclick="javascript:location.href='http://$SITE_DOMAIN/banish?fleid=$uid&flrid=$fid'">删除好友</p>
+                </div>
             </div>
         </div>
     </div>
@@ -157,7 +167,6 @@ $def with (data1, data2)
                         fontSize: 35,
                         color: '#8A2BE2',
                     },
-                    subtext: '测试数据'
                 },
 
                 tooltip : {
@@ -168,7 +177,7 @@ $def with (data1, data2)
                 },
 
                 legend: {
-                    data:['行走步数','奔跑步数'],
+                    data:['消耗热量'],
                     x: 'right',
                     textStyle: {
                         fontSize: 27,
@@ -210,7 +219,7 @@ $def with (data1, data2)
 
                 series : [
                     {
-                        name:'行走步数',
+                        name:'消耗热量',
                         type:'line',
                         itemStyle: {normal: {areaStyle: {type: 'default'}}},
                         data:[$data1[6], $data1[5], $data1[4], $data1[3], $data1[2], $data1[1], $data1[0]],

@@ -1,7 +1,6 @@
 # coding: UTF-8
 import os
  
-import sae
 import web
  
 from weixinInterface import WeixinInterface
@@ -16,6 +15,7 @@ from plan import Plan
 from pk import Pk
 from fight import Fight
 from weapon import Weapon
+from banish import Banish
 
 urls = (
 '/weixin','WeixinInterface',
@@ -29,12 +29,21 @@ urls = (
 '/plan', 'Plan',
 '/pk', 'Pk',
 '/fight', 'Fight',
-'/weapon', 'Weapon'
+'/weapon', 'Weapon',
+'/banish', 'Banish'
 )
  
 app_root = os.path.dirname(__file__)
 templates_root = os.path.join(app_root, 'templates')
 render = web.template.render(templates_root)
- 
-app = web.application(urls, globals()).wsgifunc()        
-application = sae.create_wsgi_app(app)
+
+def notfound():
+	return web.notfound(render.notfound())
+
+def internalerror():
+	return web.internalerror(render.internalerror())
+
+app = web.application(urls, globals())
+app.notfound = notfound
+app.internalerror = internalerror
+application = app.wsgifunc()

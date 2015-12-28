@@ -2,6 +2,7 @@
 import web
 import os
 import database
+import datetime
 
 class Rank:
     
@@ -15,23 +16,28 @@ class Rank:
         #获取GET请求中OpenID
         row = web.input()
         openid = row.openid
-        myid = self.db.user.get(openid=openid)["id"]
+        myself = self.db.user.get(openid = openid)
+        myid = myself["id"]
         #在数据库中查询用户运动数据
+        date_today = datetime.datetime.now().strftime("%Y-%m-%d")
         newdata = self.db.follower.get(follower = myid)
         friends = []
         for fid in newdata:
+            user = self.db.user.get(id = fid)
+            if not user:
+                break
             person = {}
             person["id"] = fid
-            person["name"] = self.db.user.get(id=fid)["nickname"]
-            person["openid"] = self.db.user.get(id=fid)["openid"]
-            person["steps"] = 300
+            person["name"] = user["nickname"]
+            person["openid"] = user["openid"]
+            person["steps"] = self.db.bong.get_calories(openid = user["openid"], date = date_today)
             friends.append(person)
    		
         person = {}
         person["id"] = myid
-        person["name"] = self.db.user.get(id=myid)["nickname"]
-        person["openid"] = self.db.user.get(id=myid)["openid"]
-        person["steps"] = 1000
+        person["name"] = myself["nickname"]
+        person["openid"] = myself["openid"]
+        person["steps"] = self.db.bong.get_calories(openid = myself["openid"], date = date_today)
         friends.append(person)
         
         friends.sort(key = lambda e: e['steps'], reverse = True)

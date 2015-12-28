@@ -22,8 +22,8 @@ class Body:
         myself["Uname"] = my["nickname"]
         myself["id"] = my["id"]
         if myy == {}:
-            myself["height"] = -1
-            myself["weight"] = -1
+            myself["height"] = 0
+            myself["weight"] = 0
         else:
             myself["height"] = myy["height"]
             myself["weight"] = myy["weight"]

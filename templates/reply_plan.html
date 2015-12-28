@@ -1,4 +1,4 @@
-$def with (openid)
+$def with (openid, SITE_DOMAIN)
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -13,7 +13,7 @@ $def with (openid)
 </head>
 <body>
     <div class="container">
-        <form name="input" action="http://f4ss.sinaapp.com/plan?openid=$openid" method="post">
+        <form name="input" action="http://$SITE_DOMAIN/plan?openid=$openid" method="post">
             <div class="row">
                 <div class="col-xs-6">
                     <div class="formFontL" style="line-height: 6em">

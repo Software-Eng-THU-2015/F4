@@ -1,4 +1,4 @@
-$def with (follower, followee, result)
+$def with (follower, followee, result, SITE_DOMAIN)
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -19,7 +19,7 @@ $def with (follower, followee, result)
         <div class="row">
             <div class="headText regularHeight">
                 <div class="box" style="background-color:#83AF9B">
-                    <p onclick="javascript:location.href='http://f4ss.sinaapp.com/follower?openid=$followee'">返回好友列表</P>
+                    <p onclick="javascript:location.href='http://$SITE_DOMAIN/follower?openid=$followee'">返回好友列表</P>
                 </div>
             </div>
         </div>

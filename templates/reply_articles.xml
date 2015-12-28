@@ -1,4 +1,4 @@
-$def with (toUser,fromUser,createTime, openID)
+$def with (toUser,fromUser,createTime, openID,SITE_DOMAIN)
 <xml>
 <ToUserName><![CDATA[$toUser]]></ToUserName>
 <FromUserName><![CDATA[$fromUser]]></FromUserName>
@@ -10,19 +10,19 @@ $def with (toUser,fromUser,createTime, openID)
 <Title><![CDATA[sport]]></Title> 
 <Description><![CDATA[description1]]></Description>
 <PicUrl><![CDATA[http://pic12.nipic.com/20110112/6119795_094015081163_2.jpg]]></PicUrl>
-<Url><![CDATA[http://f4ss.sinaapp.com/sport?openid=$openID]]></Url>
+<Url><![CDATA[http://$SITE_DOMAIN/sport?openid=$openID]]></Url>
 </item>
 <item>
 <Title><![CDATA[sleep]]></Title>
 <Description><![CDATA[description]]></Description>
-<PicUrl><![CDATA[http://img4.imgtn.bdimg.com/it/u=1470908013,1728903265&fm=21&gp=0.jpg]]></PicUrl>
-<Url><![CDATA[http://f4ss.sinaapp.com/sleep?openid=$openID]]></Url>
+<PicUrl><![CDATA[http://f4ss.sinaapp.com/static/pic/sleep.jpg]]></PicUrl>
+<Url><![CDATA[http://$SITE_DOMAIN/sleep?openid=$openID]]></Url>
 </item>
 <item>
 <Title><![CDATA[myself]]></Title>
 <Description><![CDATA[description]]></Description>
-<PicUrl><![CDATA[http://img1.imgtn.bdimg.com/it/u=2738372617,801592230&fm=21&gp=0.jpg]]></PicUrl>
-<Url><![CDATA[http://f4ss.sinaapp.com/body?openid=$openID]]></Url>
+<PicUrl><![CDATA[http://f4ss.sinaapp.com/static/pic/myself.png]]></PicUrl>
+<Url><![CDATA[http://$SITE_DOMAIN/body?openid=$openID]]></Url>
 </item>
 </Articles>
 </xml> 

@@ -12,18 +12,23 @@ $def with(height, weight, calories)
     </style>
 </head>
 <body>
-    <div class="headerTitle">
-        <p>您已设定的信息</p>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="headText largeHeight">
-                <div class="box" style="background-color:#83AF9B">
-                    <p>$height厘米</p>
-                    <p>$weight千克</P>
-                    <p>$calories大卡</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    $if not weight:
+    	<div class="headerTitle">
+            <p>$height</p>
+    	</div>
+    $else:
+    	<div class="headerTitle">
+    	    <p>您已设定的信息</p>
+    	</div>
+    	<div class="container">
+        	<div class="row">
+            	<div class="headText largeHeight">
+                	<div class="box" style="background-color:#83AF9B">
+                    	<p>$height厘米</p>
+                    	<p>$weight千克</p>
+                    	<p>$calories大卡</p>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
 </body>

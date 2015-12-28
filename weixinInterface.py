@@ -6,15 +6,15 @@ if "test" not in sys.path:
 import hashlib
 import httplib
 import web
-import lxml
 import time
 import os
 import urllib2,json
-from lxml import etree
+from xml.etree import ElementTree
 import tool
 import database
 import random
 import datetime
+from settings import *
 
 import unittest
 import test_database
@@ -43,7 +43,7 @@ class WeixinInterface:
         sha1=hashlib.sha1()
         map(sha1.update,list)
         hashcode=sha1.hexdigest()
-        #sha1加密算法        
+        #sha1加密算法 
  
         #如果是来自微信的请求，则回复echostr
         if hashcode == signature:
@@ -51,7 +51,7 @@ class WeixinInterface:
 
     def POST(self):        
         datastr = web.data() #获得post来的数据
-        xml = etree.fromstring(datastr)#进行XML解析
+        xml = ElementTree.fromstring(datastr)#进行XML解析
         msg_type=xml.find("MsgType").text
         from_user=xml.find("FromUserName").text
         to_user=xml.find("ToUserName").text
@@ -60,12 +60,7 @@ class WeixinInterface:
         if msg_type == "text":
             content = xml.find("Content").text
             
-            if content == "test database":
-                self.db.weapon.insert(from_user, 15)
-                self.db.weapon.insert(from_user, 16)
-                self.db.weapon.insert(from_user, 17)
-                self.db.weapon.insert(from_user, 18)
-                self.db.weapon.insert(from_user, 19)
+            '''if content == "test database":
                 suite_1 = unittest.TestLoader().loadTestsFromTestCase(test_database.test_database_message)
                 suite_2 = unittest.TestLoader().loadTestsFromTestCase(test_database.test_database_user)
                 suite_3 = unittest.TestLoader().loadTestsFromTestCase(test_database.test_database_follower)
@@ -74,11 +69,13 @@ class WeixinInterface:
                 suite_6 = unittest.TestLoader().loadTestsFromTestCase(test_database.test_database_weapon)
                 suite = unittest.TestSuite([])
                 unittest.TextTestRunner(verbosity = 2).run(suite)
-                return self.render.reply_text(from_user, to_user, int(time.time()), "accept database test")
+                return self.render.reply_text(from_user, to_user, int(time.time()), "accept database test")'''
 
-            if content == "insert data":
-                self.tool.get_data_from_txt()
-                return self.render.reply_text(from_user, to_user, int(time.time()), "insert ok")
+            if content == "test token":
+                print("test begin")
+                self.tool.refresh_token()
+                print(self.db.message.get_token())
+                return self.render.reply_text(from_user, to_user, int(time.time()), "test token")
 
             if len(content.split('-', 4)) == 3 or len(content.split(' ', 4)) == 3:
                 calories = self.db.bong.get_calories(from_user, content)
@@ -119,7 +116,7 @@ class WeixinInterface:
             if event == "unsubscribe":
                 self.db.weapon.delete(from_user)
                 uid = self.db.user.get(openid = from_user)["id"]
-                self.db.follower.delete(uid)
+                self.db.follower.delete(follower=uid)
                 self.db.stranger.delete(user=uid)
                 self.db.user.delete(from_user)
 
@@ -127,11 +124,11 @@ class WeixinInterface:
             if event == "CLICK":
                 key = xml.find("EventKey").text
                 if key == "info":
-                    return self.render.reply_articles(from_user,to_user,int(time.time()), from_user)
+                    return self.render.reply_articles(from_user,to_user,int(time.time()), from_user, SITE_DOMAIN)
                 if key == "follower":
-                    return self.render.reply_article(from_user,to_user,int(time.time()), from_user)
+                    return self.render.reply_article(from_user,to_user,int(time.time()), from_user, SITE_DOMAIN)
                 if key == "rank":
-                    return self.render.reply_rank(from_user,to_user,int(time.time()), from_user)
+                    return self.render.reply_rank(from_user,to_user,int(time.time()), from_user, SITE_DOMAIN)
                 if key == "signin":
                     last_date = self.db.user.get(openid=from_user)["signin_time"]
                     now_date = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -151,9 +148,4 @@ class WeixinInterface:
                     self.db.user.update_point(from_user, point, total)
                     return self.render.reply_text(from_user,to_user,int(time.time()), randslogan["%d" %randid])
                 if key == "pk":
-                    return self.render.reply_pkpage(from_user,to_user,int(time.time()), from_user)
-                    
-
-		#推送图文信息
-        return self.render.reply_articles(from_user,to_user,int(time.time()), from_user)
-        
+                    return self.render.reply_pkpage(from_user,to_user,int(time.time()), from_user,SITE_DOMAIN)

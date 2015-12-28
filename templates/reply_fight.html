@@ -40,7 +40,9 @@ $def with (uid, fid, data, uHY, fHY, result, length)
     	</div>
         <div class="row">
             <div class="headText">
-            <p id="res">战斗开始!</p>
+                <div style="border:medium solid #000000">
+                    <p id="res">战斗开始!</p>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -71,10 +73,11 @@ $def with (uid, fid, data, uHY, fHY, result, length)
             newDiv.className = "headText"
             newDiv.innerHTML = "<p>" + detail[counter] + "</p>"
             rootDom.appendChild(newDiv)
-            uhDom.style.width='' + uH[counter] + '%'
+            uhDom.style.width = '' + uH[counter] + '%'
             uhNum.innerHTML = '' + uH[counter]
-            fhDom.style.width='' + fH[counter] + '%'
+            fhDom.style.width = '' + fH[counter] + '%'
             fhNum.innerHTML = '' + fH[counter]
+            rest.innerHTML = detail[counter]
             counter += 1
             if (counter >= maxtime) {
                 rest.innerHTML = "$result"

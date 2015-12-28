@@ -1,4 +1,4 @@
-$def with (data, data2, myid)
+$def with (data, data2, myid, SITE_DOMAIN)
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
@@ -22,7 +22,7 @@ $def with (data, data2, myid)
             		<div class="followerlist">
                         <div class="headText regularHeight">
                             <div class="box" style="background-color:#D97450">
-                                <p onclick="javascript:location.href='http://f4ss.sinaapp.com/info?openid=$follower["id"]'">
+                                <p onclick="javascript:location.href='http://$SITE_DOMAIN/info?openid=$follower["openid"]&myid=$myid'">
                                     $follower["name"]
                                 </p>
                             </div>
@@ -39,8 +39,8 @@ $def with (data, data2, myid)
 				<div class="row">
 					<div class="followerlist">
 						<div class="col-xs-6">
-							<div class="headText smallHeight">
-								<div class="box">
+							<div class="headText regularHeight">
+                                <div class="box" style="height:22em; background-color:#83AF9B">
 									<p>$stranger["name"]</p>
 								</div>
 							</div>
@@ -48,14 +48,14 @@ $def with (data, data2, myid)
 						<div class="col-xs-3">
 							<div class="headText  smallHeight">
 								<div class="box" style="background-color:#6BC235">
-									<p onclick="javascript:location.href='http://f4ss.sinaapp.com/confirm?fleid=$myid&flrid=$stranger["id"]&type=1'">接受</p>
+									<p onclick="javascript:location.href='http://$SITE_DOMAIN/confirm?fleid=$myid&flrid=$stranger["id"]&type=1'">接受</p>
 								</div>
 							</div>
 						</div>
 						<div class="col-xs-3">
 							<div class="headText  smallHeight">
 								<div class="box" style="background-color:#C51F1F">
-									<p onclick="javascript:location.href='http://f4ss.sinaapp.com/confirm?fleid=$myid&flrid=$stranger["id"]&type=0'">拒绝</p>
+									<p onclick="javascript:location.href='http://$SITE_DOMAIN/confirm?fleid=$myid&flrid=$stranger["id"]&type=0'">拒绝</p>
 								</div>
 							</div>
 						</div>

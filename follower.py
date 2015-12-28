@@ -2,6 +2,7 @@
 import web
 import os
 import database
+from settings import SITE_DOMAIN
 
 class Follower:
     
@@ -36,4 +37,4 @@ class Follower:
             person["openid"] = self.db.user.get(id=id)["openid"]
             strangers.append(person)
             
-        return self.render.reply_follower(friends, strangers, myid)
+        return self.render.reply_follower(friends, strangers, myid, SITE_DOMAIN)

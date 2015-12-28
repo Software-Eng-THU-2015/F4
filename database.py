@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 import web
-import sae
 import datetime
 import httplib
+from settings import *
 
 class database:
 	def __init__(self):
 		self.db = web.database(
 				dbn="mysql",  
-				db=sae.const.MYSQL_DB,  
-				user=sae.const.MYSQL_USER,  
-				pw=sae.const.MYSQL_PASS,  
-				host=sae.const.MYSQL_HOST,  
-				port=int(sae.const.MYSQL_PORT),  
+				db=DB_NAME,  
+				user=DB_USER,  
+				pw=DB_PASSWORD,  
+				host=DB_HOST,
 			)
 	
 		self.message = message(self.db)
@@ -31,19 +30,22 @@ class message:
 		try:
 			reply = self.db.query("select * from Message where Type = 'TOKEN'")[0].Text
 		except:
+			self.db.insert("Message", Text = "", Type = "TOKEN")
 			reply = ""
 		return reply
 
 	def get_appid(self):
 		try:
-			reply = self.db.query("select * from Message where Type = 'APPID'")[0].Text
+			#reply = self.db.query("select * from Message where Type = 'APPID'")[0].Text
+			reply = APP_ID
 		except:
 			reply = ""
 		return reply
 
 	def get_appsecret(self):
 		try:
-			reply = self.db.query("select * from Message where Type = 'APPSECRET'")[0].Text
+			#reply = self.db.query("select * from Message where Type = 'APPSECRET'")[0].Text
+			reply = APP_SECRET
 		except:
 			reply = ""
 		return reply
@@ -186,22 +188,22 @@ class bong:
 		date_2 = datetime.datetime.strptime(date_1, "%Y-%m-%d %H:%M:%S") + datetime.timedelta(days = 1)
 		date_2 = date_2.strftime("%Y-%m-%d %H:%M:%S")
 		
-		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2", vars = {"date_1": date_1, "date_2": date_2, })
+		'''list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2", vars = {"date_1": date_1, "date_2": date_2, })
 		calories = 0
 		try:
 			for index in list:
 				calories += index.Calories
 		except:
-			calories = 0
+			calories = 0'''
 
-		'''try:
+		try:
 			id = self.db.query("select * from User where OpenID = $id", vars = {"id": openid, })[0].id % 100
 			list = self.get_data(date_1, date_2, id)
 		except:
 			return 0
 		calories = 0
 		for index in list:
-			calories += index["calories"]'''
+			calories += index["calories"]
 
 		return calories
 
@@ -210,7 +212,7 @@ class bong:
 		date_1 = datetime.datetime.strptime(date_2, "%Y-%m-%d %H:%M:%S") - datetime.timedelta(days = 1)
 		date_1 = date_1.strftime("%Y-%m-%d %H:%M:%S")
 		
-		list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2 and Type = 1", vars = {"date_1": date_1, "date_2": date_2, })		
+		'''list = self.db.query("select * from Bong where StartTime >= $date_1 and StartTime < $date_2 and Type = 1", vars = {"date_1": date_1, "date_2": date_2, })		
 		dsleep = 0
 		lsleep = 0
 		try:
@@ -219,9 +221,9 @@ class bong:
 				lsleep += index.LsNum
 		except:
 			dsleep = 0
-			lsleep = 0
+			lsleep = 0'''
 
-		'''try:
+		try:
 			id = self.db.query("select * from User where OpenID = $id", vars = {"id": openid, })[0].id % 100
 			list = self.get_data(date_1, date_2, id)
 		except:
@@ -230,7 +232,7 @@ class bong:
 		lsleep = 0
 		for index in list:
 			dsleep += index["dsNum"]
-			lsleep += index["lsNum"]'''
+			lsleep += index["lsNum"]
 
 		return {"dsleep": dsleep, "lsleep": lsleep}
 
@@ -243,10 +245,15 @@ class follower:
 		reply_b = self.db.insert("Follower", FollowerID = follower_b, FollowingID = follower_a)
 		return reply_a and reply_b
 
-	def delete(self, follower):
-		reply_a = self.db.delete("Follower", where = "FollowerID = $id", vars = {"id": follower, })
-		reply_b = self.db.delete("Follower", where = "FollowingID = $id", vars = {"id": follower, })
-		return reply_a and reply_b
+	def delete(self, follower = 0, follower_a = 0, follower_b = 0):
+		if follower:
+			reply_a = self.db.delete("Follower", where = "FollowerID = $id", vars = {"id": follower, })
+			reply_b = self.db.delete("Follower", where = "FollowingID = $id", vars = {"id": follower, })
+			return reply_a and reply_b
+		if follower_a and follower_b:
+			reply_a = self.db.delete("Follower", where = "FollowerID = $id_a and FollowingID = $id_b", vars = {"id_a": follower_a, "id_b": follower_b, })
+			reply_b = self.db.delete("Follower", where = "FollowingID = $id_a and FollowerID = $id_b", vars = {"id_a": follower_a, "id_b": follower_b, })
+			return reply_a and reply_b
 
 	def update(self):
 		pass
@@ -329,8 +336,8 @@ class plan:
 		self.db = db
 
 	def insert(self, openid, height, weight, goal_calo):
-		if height < 0 or weight < 0 or goal_calo < 0:
-			return -1
+		#if height < 0 or weight < 0 or goal_calo < 0:
+		#	return -1
 		plan_list = self.db.query("select * from Plan where OpenID = $id", vars = {"id": openid, })
 		try:
 			tmp = plan_list[0]

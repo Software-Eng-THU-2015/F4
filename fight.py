@@ -83,7 +83,7 @@ class Fight:
                         harm = random.randint(12,20)
                         hp_2 -= harm
                         sharm = "%d" %harm
-                        desc = fighter_1 + u"打出天马流星拳！对" + fighter_2 + u"造成了" + sharm + u"点伤害\n"
+                        desc = fighter_1 + u"打出天马流星拳！对" + fighter_2 + u"造成了" + sharm + u"点伤害"
                         
 
                         factor = random.randint(1,10)
@@ -108,6 +108,8 @@ class Fight:
                         hp_2 -= harm
                         sharm = "%d" %harm
                         hp_1 += 5
+                        if hp_1 > 100:
+                            hp_1 = 100
                         desc = fighter_1 + u"饮血剑刺出！对" + fighter_2 + u"造成了" + sharm + u"点伤害，恢复自身5点生命"
                         data.append(desc)
                     elif weapon == 12:
@@ -250,7 +252,7 @@ class Fight:
                         harm = random.randint(12,20)
                         hp_1 -= harm
                         sharm = "%d" %harm
-                        desc = fighter_2 + u"打出天马流星拳！对" + fighter_1 + u"造成了" + sharm + u"点伤害\n"
+                        desc = fighter_2 + u"打出天马流星拳！对" + fighter_1 + u"造成了" + sharm + u"点伤害"
                         
 
                         factor = random.randint(1,10)
@@ -275,6 +277,8 @@ class Fight:
                         hp_1 -= harm
                         sharm = "%d" %harm
                         hp_2 += 5
+                        if hp_2 > 100:
+                            hp_2 = 100
                         desc = fighter_2 + u"饮血剑刺出！对" + fighter_1 + u"造成了" + sharm + u"点伤害，恢复自身5点生命"
                         data.append(desc)
                     elif weapon == 12:

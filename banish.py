@@ -4,7 +4,7 @@ import os
 import database
 from settings import SITE_DOMAIN
 
-class Confirm:
+class Banish:
     
     def __init__(self):
         self.app_root = os.path.dirname(__file__)
@@ -17,16 +17,16 @@ class Confirm:
         row = web.input()
         flrid = row.flrid
         fleid = row.fleid
-        mytype = row.type
-        flrname = self.db.user.get(id = flrid)["nickname"]
-        flename = self.db.user.get(id = fleid)["openid"]
+        flruser = self.db.user.get(openid = flrid)
+        fleuser = self.db.user.get(id = fleid)
+        flrname = flruser["nickname"]
+        flename = fleuser["openid"]
+        flrid = flruser["id"]
 
-        if row.type == "1":
-            if self.db.follower.is_followed(fleid, flrid) == 0:
-        	    self.db.follower.insert(fleid, flrid)
-            result = "您已通过好友申请"
+        if self.db.follower.is_followed(follower_a=flrid, follower_b=fleid):
+            self.db.follower.delete(follower_a=flrid, follower_b=fleid)
+            result = "好友关系解除。"
         else:
-            result = "您已拒绝好友申请" 
-        self.db.stranger.delete(to_user = fleid, from_user = flrid)
+            result = "你们并不是好友。" 
         
         return self.render.reply_confirm(flrname, flename, result, SITE_DOMAIN)

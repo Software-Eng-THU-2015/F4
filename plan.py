@@ -3,6 +3,7 @@ import web
 import os
 import database
 import datetime
+from settings import SITE_DOMAIN
 
 class Plan:
     
@@ -14,13 +15,13 @@ class Plan:
     
     def GET(self):
 
-    	row = web.input()
+        row = web.input()
         openid = row.openid
 
         #在数据库中查询用户运动数据
         
 
-        return self.render.reply_plan(openid)
+        return self.render.reply_plan(openid, SITE_DOMAIN)
 
     def POST(self):
 
@@ -42,12 +43,7 @@ class Plan:
             z = int(calories)
         except:
             return self.render.reply_myplan("目标数据错误", "", "")
-        
 
-        old_plan = self.db.plan.get(openid)
-        if old_plan:
-            self.db.plan.update(openid=openid, height=x, weight=y, goal_calo=z)
-        else:
-            self.db.plan.insert(openid=openid, height=x, weight=y, goal_calo=z)
+        self.db.plan.insert(openid=openid, height=x, weight=y, goal_calo=z)
 
         return self.render.reply_myplan("您的身高：%d" %x,"您的体重：%d" %y,"您的目标：%d" %z)

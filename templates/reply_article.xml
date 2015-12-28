@@ -1,4 +1,4 @@
-$def with (toUser,fromUser,createTime, openID)
+$def with (toUser,fromUser,createTime, openID,SITE_DOMAIN)
 <xml>
 <ToUserName><![CDATA[$toUser]]></ToUserName>
 <FromUserName><![CDATA[$fromUser]]></FromUserName>
@@ -9,8 +9,8 @@ $def with (toUser,fromUser,createTime, openID)
 <item>
 <Title><![CDATA[关心的人]]></Title> 
 <Description><![CDATA[关心的人]]></Description>
-<PicUrl><![CDATA[http://img3.imgtn.bdimg.com/it/u=1671124736,1832461993&fm=21&gp=0.jpg]]></PicUrl>
-<Url><![CDATA[http://f4ss.sinaapp.com/follower?openid=$openID]]></Url>
+<PicUrl><![CDATA[http://f4ss.sinaapp.com/static/pic/friendship.jpg]]></PicUrl>
+<Url><![CDATA[http://$SITE_DOMAIN/follower?openid=$openID]]></Url>
 </item>
 </Articles>
 </xml> 

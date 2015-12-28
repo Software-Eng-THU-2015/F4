@@ -3,6 +3,7 @@ import web
 import os
 import database
 import datetime
+from settings import SITE_DOMAIN
 
 class Pk:
     
@@ -62,4 +63,4 @@ class Pk:
             newweapons.append(w)
 
  
-        return self.render.reply_pk(friends, weapons, newweapons, myid)
+        return self.render.reply_pk(friends, weapons, newweapons, myid,SITE_DOMAIN)

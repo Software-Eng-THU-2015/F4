@@ -1,4 +1,4 @@
-$def with (openID, result)
+$def with (openID, result, SITE_DOMAIN)
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -20,7 +20,7 @@ $def with (openID, result)
         <div class="row">
             <div class="headText regularHeight">
                 <div class="box" style="background-color:#83AF9B">
-                    <p onclick="javascript:location.href='http://f4ss.sinaapp.com/pk?openid=$openID'">返回PK页面</p>
+                    <p onclick="javascript:location.href='http://$SITE_DOMAIN/pk?openid=$openID'">返回PK页面</p>
                 </div>
             </div>
         </div>

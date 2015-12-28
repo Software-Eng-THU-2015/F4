@@ -17,9 +17,11 @@ class tool:
 		#更新token
 		conn = httplib.HTTPSConnection(self.BASEURL)
 		conn.request("GET", self.TOKENURL)
+
 		tokenJson = eval(conn.getresponse().read())
 		self.accessToken = tokenJson["access_token"]
 		self.db.message.update_token(self.accessToken)
+
 		conn.close()
 
 	def get_user_msg(self, userOpenId):	
@@ -30,12 +32,11 @@ class tool:
 			userInfoJson = eval(conn.getresponse().read())
 			conn.close()
 			if "errcode" in userInfoJson:
-				if userInfoJson["errcode"] == 42001 or userInfoJson["errcode"] == 40001:
-					self.refresh_token()
-					conn = httplib.HTTPSConnection(self.BASEURL)
-					conn.request("GET", self.USERURL % (self.accessToken, userOpenId))
-					userInfoJson = eval(conn.getresponse().read())
-					conn.close()
+				self.refresh_token()
+				conn = httplib.HTTPSConnection(self.BASEURL)
+				conn.request("GET", self.USERURL % (self.accessToken, userOpenId))
+				userInfoJson = eval(conn.getresponse().read())
+				conn.close()
 
 			if "nickname" in userInfoJson:
 				return userInfoJson

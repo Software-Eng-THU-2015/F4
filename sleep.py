@@ -14,17 +14,17 @@ class Sleep:
     
     def GET(self):
 
-    	row = web.input()
+        row = web.input()
         openid = row.openid
 
         #在数据库中查询用户运动数据
         data = []
-        date_today = "2015-11-17"
+        date_today = datetime.datetime.now().strftime("%Y-%m-%d")
 
         for i in range(7):
-        	sleeps = self.db.bong.get_sleep(openid, date_today)
-        	data.append(sleeps)
-        	date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
-        	date_today = date_today.strftime("%Y-%m-%d")
+            sleeps = self.db.bong.get_sleep(openid, date_today)
+            data.append(sleeps)            
+            date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
+            date_today = date_today.strftime("%Y-%m-%d")
 
         return self.render.reply_sleep(data)

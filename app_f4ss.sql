@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.3.8.1
--- http://www.phpmyadmin.net
---
--- 主机: w.rdc.sae.sina.com.cn:3307
--- 生成日期: 2015 年 12 月 13 日 16:41
--- 服务器版本: 5.5.27
--- PHP 版本: 5.3.3
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
@@ -16,8 +7,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- 数据库: `app_f4ss`
+-- 数据库: `f4ss`
 --
+
+USE f4ss;
 
 -- --------------------------------------------------------
 
@@ -52,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `Bong` (
 -- 表的结构 `Follower`
 --
 
-CREATE TABLE IF NOT EXISTS `Follower` (  /* 关注的人 follower关注following */
+CREATE TABLE IF NOT EXISTS `Follower` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
-  `FollowingID` int(20) NOT NULL,  /* following的id */
-  `FollowerID` int(20) NOT NULL,  /* follower的id */
+  `FollowingID` int(20) NOT NULL,
+  `FollowerID` int(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -65,12 +58,19 @@ CREATE TABLE IF NOT EXISTS `Follower` (  /* 关注的人 follower关注following
 -- 表的结构 `Message`
 --
 
-CREATE TABLE IF NOT EXISTS `Message` (  /* 存储APPID APPSECRET和TOKEN */
+CREATE TABLE IF NOT EXISTS `Message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Text` varchar(128) NOT NULL,  /* 信息的内容 */
-  `Type` varchar(16) NOT NULL,  /* 信息类型 */
+  `Text` varchar(128) NOT NULL,
+  `Type` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 转存表中的数据 `Message`
+--
+
+INSERT INTO `Message` (`id`, `Text`, `Type`) VALUES
+(1, 'test_token', 'TOKEN');
 
 -- --------------------------------------------------------
 
@@ -78,12 +78,12 @@ CREATE TABLE IF NOT EXISTS `Message` (  /* 存储APPID APPSECRET和TOKEN */
 -- 表的结构 `Plan`
 --
 
-CREATE TABLE IF NOT EXISTS `Plan` (  /* 存储用户身高体重和每日目标卡路里 */
+CREATE TABLE IF NOT EXISTS `Plan` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
   `OpenID` varchar(32) NOT NULL,
-  `Height` int(4) NOT NULL,  /* 身高 */
-  `Weight` int(4) NOT NULL,  /* 体重 */
-  `GoalCalo` int(4) NOT NULL,  /* 每日目标卡路里 */
+  `Height` int(4) NOT NULL,
+  `Weight` int(4) NOT NULL,
+  `GoalCalo` int(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -93,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `Plan` (  /* 存储用户身高体重和每日目标�
 -- 表的结构 `Stranger`
 --
 
-CREATE TABLE IF NOT EXISTS `Stranger` (  /* 存储正在申请中的关注的人的信息 */
+CREATE TABLE IF NOT EXISTS `Stranger` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
-  `ToUserID` int(32) NOT NULL,  /* 申请对象的id */
-  `FromUserID` int(32) NOT NULL,  /* 申请发起者的id */
+  `ToUserID` int(32) NOT NULL,
+  `FromUserID` int(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -106,14 +106,14 @@ CREATE TABLE IF NOT EXISTS `Stranger` (  /* 存储正在申请中的关注的人
 -- 表的结构 `User`
 --
 
-CREATE TABLE IF NOT EXISTS `User` (  /* 存储用户信息 */
+CREATE TABLE IF NOT EXISTS `User` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
-  `Uname` varchar(50) NOT NULL,  /* 微信昵称 */
-  `OpenID` varchar(50) NOT NULL,  /* openid */
-  `ImageUrl` varchar(100) NOT NULL,  /* 微信头像路径 */
-  `Point` int(16) NOT NULL DEFAULT '0',  /* 未使用积分 */
-  `SignInTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  /* 签到时间 */
-  `TotalPoint` int(16) NOT NULL DEFAULT '0',  /* 包括使用过的积分在内的总积分 */
+  `Uname` varchar(50) NOT NULL,
+  `OpenID` varchar(50) NOT NULL,
+  `ImageUrl` varchar(100) NOT NULL,
+  `Point` int(16) NOT NULL DEFAULT '0',
+  `SignInTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `TotalPoint` int(16) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -123,9 +123,9 @@ CREATE TABLE IF NOT EXISTS `User` (  /* 存储用户信息 */
 -- 表的结构 `Weapon`
 --
 
-CREATE TABLE IF NOT EXISTS `Weapon` (  /* 存储用户拥有的武器 */
+CREATE TABLE IF NOT EXISTS `Weapon` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
   `OpenID` varchar(32) NOT NULL,
-  `WeaponCode` int(4) NOT NULL,  /* 武器代码 */
+  `WeaponCode` int(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

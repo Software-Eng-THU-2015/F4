@@ -4,6 +4,7 @@ import os
 import database
 import datetime
 import string
+from settings import SITE_DOMAIN
 
 class Weapon:
     
@@ -22,12 +23,12 @@ class Weapon:
         openid = my["openid"]
         if my["point"] < 100:
             result = 0
-            return self.render.reply_weapon(openid, result)
+            return self.render.reply_weapon(openid, result, SITE_DOMAIN)
         if self.db.weapon.insert(openid, wid) == -1:
             nid = string.atoi(wid) + 7
             if my["point"] < 500:
                 result = 0
-                return self.render.reply_weapon(openid, result)
+                return self.render.reply_weapon(openid, result, SITE_DOMAIN)
             self.db.weapon.update(openid, wid, nid)
             point = my["point"] - 500
             self.db.user.update_point(openid, new_point = point)
@@ -36,4 +37,4 @@ class Weapon:
             self.db.user.update_point(openid, new_point = point)
         
         result = 1
-        return self.render.reply_weapon(openid, result)
+        return self.render.reply_weapon(openid, result, SITE_DOMAIN)

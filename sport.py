@@ -3,6 +3,7 @@ import web
 import os
 import database
 import datetime
+from settings import SITE_DOMAIN
 
 class Sport:
     
@@ -19,13 +20,13 @@ class Sport:
 
         #在数据库中查询用户运动数据
         data = []
-        date_today = "2015-11-17"
+        date_today = datetime.datetime.now().strftime("%Y-%m-%d")
 
         for i in range(7):
-        	calories = self.db.bong.get_calories(openid, date_today)
-        	data.append(calories)
-        	date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
-        	date_today = date_today.strftime("%Y-%m-%d")
+            calories = self.db.bong.get_calories(openid, date_today)
+            data.append(calories)
+            date_today = datetime.datetime.strptime(date_today, "%Y-%m-%d") - datetime.timedelta(days = 1)
+            date_today = date_today.strftime("%Y-%m-%d")
         
         goal_calos = self.db.plan.get(openid=openid)
         if goal_calos:
@@ -33,4 +34,4 @@ class Sport:
         else:
             goal_calo = "尚未制定计划"
 
-        return self.render.reply_sport(data, openid, goal_calo)
+        return self.render.reply_sport(data, openid, goal_calo,SITE_DOMAIN)
